@@ -1,4 +1,4 @@
-.sidebar:hover {
+.linkbar:hover {
   --tw-border-opacity: 1;
   border-color: hsl(var(--su) / var(--tw-border-opacity));
   --tw-bg-opacity: 1;

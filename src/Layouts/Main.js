@@ -8,7 +8,9 @@ const Main = () => {
     <div>
       <Navbar></Navbar>
       <div className="flex">
-        <SideBar></SideBar>
+        <div className="w-[16%] h-screen pt-5 bg-gray-50 hidden lg:block">
+          <SideBar></SideBar>
+        </div>
         <Outlet></Outlet>
       </div>
     </div>
