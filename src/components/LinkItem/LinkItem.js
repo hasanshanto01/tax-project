@@ -1,6 +1,5 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import ModalCard from "../ModalCard/ModalCard";
 
 const LinkItem = ({ menu }) => {
   const activeClass =
@@ -34,7 +33,6 @@ const LinkItem = ({ menu }) => {
           </NavLink>
         )}
       </li>
-      <ModalCard modalId={modalId}></ModalCard>
     </>
   );
 };
