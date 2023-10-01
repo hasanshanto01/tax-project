@@ -19,7 +19,7 @@ const SideBar = () => {
   ];
 
   return (
-    <ul className="mx-10">
+    <ul className="mx-8">
       {menuList.map((menu, i) => (
         <LinkItem key={i} menu={menu}></LinkItem>
       ))}

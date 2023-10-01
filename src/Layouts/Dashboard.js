@@ -4,7 +4,7 @@ import { Outlet } from "react-router-dom";
 
 const Dashboard = () => {
   return (
-    <div className="w-full lg:w-[80%] mx-8">
+    <div className="w-full lg:w-[82%] mx-8 border border-green-500">
       <QueryMenu></QueryMenu>
       <div className="my-5 px-5 py-2 flex flex-col-reverse md:flex-row md:justify-between rounded-md bg-gray-50">
         <p className="mt-2 md:mt-0">

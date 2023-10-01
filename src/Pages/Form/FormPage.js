@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import InputItem from "../../components/InputItem/InputItem";
+import InputFieldItem from "../../components/InputFieldItem/InputFieldItem";
 
 const FormPage = () => {
   const {
@@ -9,41 +9,63 @@ const FormPage = () => {
     formState: { errors },
   } = useForm();
 
-  const handleForm = (data) => {
+  const handleFormDetails = (data) => {
     console.log(data);
   };
 
   const InputItems = [
     {
-      fieldName: "Basic pay",
+      labelName: "Basic pay",
+      registerName: "basicPay",
+      type: "number",
+      requiredStatus: true,
     },
     {
-      fieldName: "Arrear pay (if not included in taxable income earlier)",
+      labelName: "Arrear pay (if not included in taxable income earlier)",
+      registerName: "arrearPay",
+      type: "number",
+      requiredStatus: false,
     },
     {
-      fieldName: "Special allowance",
+      labelName: "Special allowance",
+      registerName: "specialAllowance",
+      type: "number",
+      requiredStatus: false,
     },
     {
-      fieldName: "House rent allowance",
+      labelName: "House rent allowance",
+      registerName: "houseRentAllowance",
+      type: "number",
+      requiredStatus: false,
     },
     {
-      fieldName: "Medical allowance",
+      labelName: "Medical allowance",
+      registerName: "medicalAllowance",
+      type: "number",
+      requiredStatus: false,
     },
     {
-      fieldName: "Conveyance allowance",
+      labelName: "Conveyance allowance",
+      registerName: "conveyanceAllowance",
+      type: "number",
+      requiredStatus: false,
     },
   ];
 
   return (
     <div>
-      <form onSubmit={handleSubmit(handleForm)} className="my-3">
+      <form
+        onSubmit={handleSubmit(handleFormDetails)}
+        className="my-3 p-2 text-sm bg-gray-50 rounded-md"
+      >
         {InputItems.map((item, i) => (
-          <>
-            <InputItem key={i} register={register} item={item}></InputItem>
-            {errors.item?.fieldName && <p>{errors.item?.fieldName?.message}</p>}
-          </>
+          <InputFieldItem
+            key={i}
+            item={item}
+            register={register}
+          ></InputFieldItem>
         ))}
-        <div className="flex justify-center">
+        <div className="w-full lg:w-3/4 flex justify-end">
           <button className="btn btn-success my-3 w-[150px]">Submit</button>
         </div>
       </form>
