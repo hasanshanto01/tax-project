@@ -1,18 +1,24 @@
 import React from "react";
 
-const RadioField = ({ item, register }) => {
-  const { lableName, registerName, value, isChecked } = item;
+const RadioField = ({
+  item,
+  register,
+  selectedOption,
+  handleRadioOptionChange,
+}) => {
+  const { lableName, registerName, value } = item;
 
   return (
     <div className="flex items-center">
       <input
         type="radio"
-        checked={isChecked}
-        value={`${value}`}
-        className="radio"
+        value={value}
+        className="radio-xs"
         {...register(`${registerName}`, {
-          required: "This field is required",
+          require: true,
         })}
+        checked={selectedOption === value}
+        onChange={handleRadioOptionChange}
       />
       <label className="p-1">{lableName}</label>
     </div>

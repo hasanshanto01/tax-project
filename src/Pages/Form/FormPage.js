@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import InputFieldItem from "../../components/InputFieldItem/InputFieldItem";
+import SubmitBtn from "../../components/SubmitBtn/SubmitBtn";
 
 const FormPage = () => {
   const {
@@ -65,9 +66,7 @@ const FormPage = () => {
             register={register}
           ></InputFieldItem>
         ))}
-        <div className="w-full lg:w-3/4 flex justify-end">
-          <button className="btn btn-success my-3 w-[150px]">Submit</button>
-        </div>
+        <SubmitBtn></SubmitBtn>
       </form>
     </div>
   );
