@@ -46,7 +46,7 @@ const CategorySetUp = () => {
   };
 
   return (
-    <div>
+    <div className="">
       <div className="flex  justify-between">
         <h2 className="text-xl font-semibold">Category Set Up</h2>
         <button

@@ -96,7 +96,7 @@ const PersonalInfo = () => {
       </h2>
       <form
         onSubmit={handleSubmit(handlePersonalInfo)}
-        className="my-3 p-2 text-sm bg-gray-50 rounded-md"
+        className="my-3 p-2 text-sm bg-gray-50 rounded-md border"
       >
         {/* date */}
         <div className="w-full lg:w-3/4 my-2 flex items-center">

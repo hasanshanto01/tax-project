@@ -10,6 +10,8 @@ import AdminPage from "../Pages/AdminPage/AdminPage/AdminPage";
 import ErrorPage from "../Shared/ErrorPage/ErrorPage";
 import CategoryDescription from "../Pages/AdminPage/CategorySetUp/CategoryDescription";
 import Slabs from "../Pages/AdminPage/SlabsSetup/Slabs";
+import LoginPage from "../Pages/LoginPage/LoginPage";
+import SignupPage from "../Pages/SignupPage/SignupPage";
 
 export const routes = createBrowserRouter([
   {
@@ -60,5 +62,13 @@ export const routes = createBrowserRouter([
         element: <Slabs></Slabs>,
       },
     ],
+  },
+  {
+    path: "/login",
+    element: <LoginPage></LoginPage>,
+  },
+  {
+    path: "/signup",
+    element: <SignupPage></SignupPage>,
   },
 ]);
