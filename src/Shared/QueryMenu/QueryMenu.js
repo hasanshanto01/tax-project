@@ -17,13 +17,11 @@ const QueryMenu = () => {
       id: 3,
       title: "House Income",
       path: "/dashboard/form2/3",
-      openModal: "md_houseIncome",
     },
     {
       id: 4,
       title: "Agriculture",
       path: "/dashboard/form2/4",
-      openModal: "md_agriculture",
     },
     {
       id: 5,

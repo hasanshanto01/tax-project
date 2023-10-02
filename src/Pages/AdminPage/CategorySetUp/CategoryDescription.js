@@ -76,20 +76,20 @@ const CategoryDescription = () => {
   return (
     <div className="w-full lg:w-[82%] mx-8 my-5">
       <button
-        className="btn btn-sm btn-outline btn-success"
+        className="btn btn-sm btn-outline btn-primary"
         onClick={handleBackBtn}
       >
         <FontAwesomeIcon icon={faArrowLeftLong} className="w-5 h-5" />
       </button>
       <form
         onSubmit={() => handleSubmit(handleDescriptionDetails)}
-        className="my-3 p-2 text-sm bg-gray-50 rounded-md"
+        className="my-3 p-2 text-sm bg-secondary rounded-md"
       >
         {/* category */}
         <div className="w-full lg:w-3/4 my-2 flex items-center">
           <label className="w-3/5 p-[6px]">Category</label>
           <select
-            className="w-2/5 p-1 border border-success rounded-sm focus:outline-none"
+            className="w-2/5 p-1 border border-primary rounded-sm focus:outline-none"
             {...register("category_name", { required: true })}
           >
             {/* <option value="resident">Resident</option>
@@ -106,7 +106,7 @@ const CategoryDescription = () => {
         <div className="w-full lg:w-3/4 my-2 flex items-center">
           <label className="w-3/5 p-[6px]">Description</label>
           <textarea
-            className="w-2/5 p-1 border border-success rounded-sm focus:outline-none"
+            className="w-2/5 p-1 border border-primary rounded-sm focus:outline-none"
             placeholder="Type here"
             {...register("description")}
           ></textarea>

@@ -6,7 +6,7 @@ const Dashboard = () => {
   return (
     <div className="w-full lg:w-[82%] mx-8">
       <QueryMenu></QueryMenu>
-      <div className="my-5 px-5 py-2 flex flex-col-reverse md:flex-row md:justify-between rounded-md bg-gray-50">
+      <div className="my-5 px-5 py-2 flex flex-col-reverse md:flex-row md:justify-between rounded-md bg-secondary">
         <p className="mt-2 md:mt-0">
           Tax File: <strong>2022-2023</strong>
         </p>

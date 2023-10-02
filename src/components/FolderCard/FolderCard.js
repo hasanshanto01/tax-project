@@ -7,7 +7,7 @@ const FolderCard = ({ folderItem }) => {
 
   return (
     <div className="border borde-base-100 p-2 flex flex-col items-center text-center">
-      <FontAwesomeIcon icon={faFolder} className="w-16 h-16 text-success" />
+      <FontAwesomeIcon icon={faFolder} className="w-16 h-16 text-primary" />
       <h2 className="font-semibold">{name}</h2>
     </div>
   );

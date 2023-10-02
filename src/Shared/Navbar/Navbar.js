@@ -6,7 +6,7 @@ import logo from "../../Asstes/logo.jpg";
 
 const Navbar = () => {
   return (
-    <div className="navbar bg-gray-50 shadow-md px-10 relative">
+    <div className="navbar bg-secondary shadow-md px-10">
       <div className="flex-1">
         <div className="dropdown">
           <label tabIndex={0} className="btn btn-ghost btn-sm flex lg:hidden">
@@ -27,17 +27,17 @@ const Navbar = () => {
           </label>
           <div
             tabIndex={0}
-            className="dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52 flex justify-center"
+            className="dropdown-content mt-3 z-[1] p-2 shadow bg-secondary rounded-box w-52 flex justify-center"
           >
             <SideBar></SideBar>
           </div>
         </div>
         <Link
           to="/"
-          className="btn btn-ghost normal-case text-xl text-success font-bold"
+          className="btn btn-ghost normal-case text-xl text-primary font-bold"
         >
           {/* Tax House */}
-          <img src={logo} className="w-8"></img>
+          <img src={logo} alt="" className="w-8"></img>
           <span>E-Laywers</span>
         </Link>
       </div>

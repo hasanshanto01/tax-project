@@ -3,35 +3,21 @@ import { NavLink } from "react-router-dom";
 
 const LinkItem = ({ menu }) => {
   const activeClass =
-    "inline-block w-[150px] p-2 my-1 rounded-md font-semibold text-center  bg-success text-gray-200 ";
+    "inline-block w-[150px] p-2 my-1 rounded-md font-semibold text-center  bg-primary text-secondary";
   const inActiveClass =
-    "inline-block w-[150px] p-2 my-1 rounded-md font-semibold text-center border border-success linkbar";
+    "inline-block w-[150px] p-2 my-1 rounded-md font-semibold text-center border border-primary";
 
-  const { title, path, modalId } = menu;
+  const { title, path } = menu;
 
   return (
     <>
       <li>
-        {menu.openModal ? (
-          <NavLink
-            to={path}
-            className={({ isActive }) =>
-              isActive ? activeClass : inActiveClass
-            }
-            onClick={() => document.getElementById(`${modalId}`).showModal()}
-          >
-            {title}
-          </NavLink>
-        ) : (
-          <NavLink
-            to={path}
-            className={({ isActive }) =>
-              isActive ? activeClass : inActiveClass
-            }
-          >
-            {title}
-          </NavLink>
-        )}
+        <NavLink
+          to={path}
+          className={({ isActive }) => (isActive ? activeClass : inActiveClass)}
+        >
+          {title}
+        </NavLink>
       </li>
     </>
   );

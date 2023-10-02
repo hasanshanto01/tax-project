@@ -1,14 +1,8 @@
 import React from "react";
 
 const InputFieldItem = ({ item, register, handleCalculativeInput }) => {
-  const {
-    labelName,
-    registerName,
-    type,
-    requiredStatus,
-    defaultValueNone,
-    calculativeStatus,
-  } = item;
+  const { labelName, registerName, type, requiredStatus, defaultValueNone } =
+    item;
   // console.log(requiredStatus);
 
   return (
@@ -22,7 +16,7 @@ const InputFieldItem = ({ item, register, handleCalculativeInput }) => {
         <input
           type={type}
           placeholder="Type here"
-          className="w-2/5 p-1 border border-success rounded-sm focus:outline-none"
+          className="w-2/5 p-1 border border-primary rounded-sm focus:outline-none"
           {...register(`${registerName}`, {
             required: requiredStatus,
           })}
@@ -36,7 +30,7 @@ const InputFieldItem = ({ item, register, handleCalculativeInput }) => {
           type={type}
           defaultValue="0"
           min="0"
-          className="w-2/5 p-1 border border-success rounded-sm focus:outline-none "
+          className="w-2/5 p-1 border border-primary rounded-sm focus:outline-none "
           {...register(`${registerName}`, {
             required: requiredStatus,
           })}
@@ -48,7 +42,7 @@ const InputFieldItem = ({ item, register, handleCalculativeInput }) => {
         <input
           type={type}
           min="0"
-          className="w-2/5 p-1 border border-success rounded-sm focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+          className="w-2/5 p-1 border border-primary rounded-sm focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
           {...register(`${registerName}`, {
             required: requiredStatus,
           })}

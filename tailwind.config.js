@@ -5,9 +5,9 @@ module.exports = {
     themes: [
       {
         mytheme: {
-          primary: "#2AAA8A",
+          primary: "#1F2839",
 
-          secondary: "#f000b8",
+          secondary: "#F7F8F3",
 
           accent: "#1dcdbc",
 
@@ -24,7 +24,6 @@ module.exports = {
           error: "#f87272",
         },
       },
-      "autumn",
     ],
   },
   plugins: [require("daisyui")],

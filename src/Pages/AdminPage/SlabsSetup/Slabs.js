@@ -51,24 +51,22 @@ const Slabs = () => {
   return (
     <div className="w-full lg:w-[82%] mx-8 my-5">
       <button
-        className="btn btn-sm btn-outline btn-success"
+        className="btn btn-sm btn-outline btn-primary"
         onClick={handleBackBtn}
       >
         <FontAwesomeIcon icon={faArrowLeftLong} className="w-5 h-5" />
       </button>
       <form
         onSubmit={() => handleSubmit(handleSlabsDetails)}
-        className="my-3 p-2 text-sm bg-gray-50 rounded-md"
+        className="my-3 p-2 text-sm bg-secondary rounded-md"
       >
         {/* select one */}
         <div className="w-full lg:w-3/4 my-2 flex items-center">
           <label className="w-3/5 p-[6px]">Select One</label>
           <select
-            className="w-2/5 p-1 border border-success rounded-sm focus:outline-none"
+            className="w-2/5 p-1 border border-primary rounded-sm focus:outline-none"
             {...register("category_name", { required: true })}
           >
-            {/* <option value="resident">Resident</option>
-            <option value="nonResident">Non-resident</option> */}
             {selectItems.map((item) => (
               <option key={item.id} value={item.value}>
                 {item.title}

@@ -13,7 +13,7 @@ const SlabsSetUp = () => {
       <div className="flex  justify-between">
         <h2 className="text-xl font-semibold">Slabs</h2>
         <button
-          className="btn btn-sm btn-success text-gray-200 rounded-md"
+          className="btn btn-sm btn-primary text-secondary rounded-md"
           onClick={handleSlabsNewBtn}
         >
           New

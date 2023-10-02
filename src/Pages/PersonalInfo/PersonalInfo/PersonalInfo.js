@@ -96,7 +96,7 @@ const PersonalInfo = () => {
       </h2>
       <form
         onSubmit={handleSubmit(handlePersonalInfo)}
-        className="my-3 p-2 text-sm bg-gray-50 rounded-md border"
+        className="my-3 p-2 text-sm bg-secondary rounded-md border"
       >
         {/* date */}
         <div className="w-full lg:w-3/4 my-2 flex items-center">
@@ -104,7 +104,7 @@ const PersonalInfo = () => {
           <input
             type="date"
             defaultValue={new Date().toISOString().substring(0, 10)}
-            className="w-2/5 p-1 border border-success rounded-sm focus:outline-none"
+            className="w-2/5 p-1 border border-primary rounded-sm focus:outline-none"
             {...register("date")} /* ,{valueAsDate: true,} */
             readOnly
           />
@@ -117,7 +117,7 @@ const PersonalInfo = () => {
           <input
             type="text"
             defaultValue="30-Jun-23"
-            className="w-2/5 p-1 border border-success rounded-sm focus:outline-none"
+            className="w-2/5 p-1 border border-primary rounded-sm focus:outline-none"
             {...register("incomeYear")}
             readOnly
           />
@@ -130,7 +130,7 @@ const PersonalInfo = () => {
           <input
             type="text"
             defaultValue="2023-24"
-            className="w-2/5 p-1 border border-success rounded-sm focus:outline-none"
+            className="w-2/5 p-1 border border-primary rounded-sm focus:outline-none"
             {...register("assessmentYear")}
             readOnly
           />
@@ -156,7 +156,7 @@ const PersonalInfo = () => {
             <span className="text-red-500">*</span>
           </label>
           <textarea
-            className="w-2/5 p-1 border border-success rounded-sm focus:outline-none"
+            className="w-2/5 p-1 border border-primary rounded-sm focus:outline-none"
             placeholder="Type here"
             {...register("address", {
               required: true,
@@ -187,7 +187,7 @@ const PersonalInfo = () => {
           <input
             type="date"
             // defaultValue={new Date().toISOString().substring(0, 10)}
-            className="w-2/5 p-1 border border-success rounded-sm focus:outline-none"
+            className="w-2/5 p-1 border border-primary rounded-sm focus:outline-none"
             {...register("dob", {
               required: true,
             })}
@@ -214,7 +214,7 @@ const PersonalInfo = () => {
           <input
             type="email"
             // defaultValue={new Date().toISOString().substring(0, 10)}
-            className="w-2/5 p-1 border border-success rounded-sm focus:outline-none"
+            className="w-2/5 p-1 border border-primary rounded-sm focus:outline-none"
             {...register("email")}
           />
         </div>
@@ -266,7 +266,7 @@ const PersonalInfo = () => {
           </label>
           <select
             defaultValue="resident"
-            className="w-2/5 p-1 border border-success rounded-sm focus:outline-none"
+            className="w-2/5 p-1 border border-primary rounded-sm focus:outline-none"
             {...register("residentStatus")}
           >
             <option value="resident">Resident</option>

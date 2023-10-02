@@ -1,4 +1,5 @@
 import React from "react";
+import "./FolderPage.css";
 import FolderCard from "../../components/FolderCard/FolderCard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFolderPlus } from "@fortawesome/free-solid-svg-icons";
@@ -38,8 +39,8 @@ const FolderPage = () => {
   ];
 
   return (
-    <div className="my-6 px-5 py-3 bg-gray-50 rounded-md">
-      <button className="btn btn-outline btn-success">
+    <div className="my-6 px-5 py-5 bg-secondary rounded-md">
+      <button className="btn btn-outline btn-primary">
         <FontAwesomeIcon icon={faFolderPlus} className="w-8 h-8" />
         New Folder
       </button>

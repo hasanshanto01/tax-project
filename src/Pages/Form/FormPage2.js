@@ -1,10 +1,16 @@
 import React from "react";
-import ModalCard from "../../components/ModalCard/ModalCard";
 
 const FormPage2 = () => {
   return (
     <div>
-      <ModalCard modalId={"modal1"}></ModalCard>
+      <div className="card w-[70%] md:w-1/2 lg:w-[30%] mx-auto my-32 bg-secondary shadow-xl">
+        <div className="card-body">
+          <p className="text-justify">
+            We are working on it, Please contact us,{" "}
+            <strong>01620002467</strong>
+          </p>
+        </div>
+      </div>
     </div>
   );
 };

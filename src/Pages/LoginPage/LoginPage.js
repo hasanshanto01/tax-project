@@ -12,9 +12,9 @@ const LoginPage = () => {
 
   return (
     <div>
-      <div className="card w-[70%] md:w-1/2 lg:w-[30%] mx-auto my-20 bg-gray-50 shadow-xl relative">
-        <div className="w-24 p-2 rounded-md bg-gray-200 absolute -top-8 left-24 md:left-36 lg:left-44">
-          <img src={logo} className="rounded-md"></img>
+      <div className="card w-[70%] md:w-1/2 lg:w-[30%] mx-auto my-32 bg-secondary shadow-xl relative">
+        <div className="w-24 p-2 rounded-md bg-white absolute -top-9 left-24 md:left-36 lg:left-44">
+          <img src={logo} alt="" className="rounded-md"></img>
         </div>
         <form
           onSubmit={handleSubmit(handleLoginForm)}
@@ -24,7 +24,7 @@ const LoginPage = () => {
             <input
               type="email"
               placeholder="Email"
-              className="w-full p-[6px] border border-success rounded-md focus:outline-none"
+              className="w-full p-[6px] border border-primary rounded-md focus:outline-none"
               {...register("email", {
                 required: true,
               })}
@@ -34,7 +34,7 @@ const LoginPage = () => {
             <input
               type="password"
               placeholder="Password"
-              className="w-full p-[6px] border border-success rounded-md focus:outline-none"
+              className="w-full p-[6px] border border-primary rounded-md focus:outline-none"
               {...register("password", {
                 required: true,
               })}
@@ -46,13 +46,15 @@ const LoginPage = () => {
           </Link>
 
           <div className="flex justify-center my-2">
-            <button className="btn btn-sm btn-success my-3 w-24">Login</button>
+            <button className="btn btn-sm btn-primary text-secondary my-3 w-24">
+              Login
+            </button>
           </div>
 
           <p className="text-center font-semibold">
             New to this site?
             <Link to="/signup" className="ml-2">
-              <strong className="text-success">Sign Up</strong>
+              <strong className="text-primary hover:underline">Sign Up</strong>
             </Link>
           </p>
         </form>

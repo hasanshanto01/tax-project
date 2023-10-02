@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 import InputFieldItem from "../../components/InputFieldItem/InputFieldItem";
 import SubmitBtn from "../../components/SubmitBtn/SubmitBtn";
@@ -53,7 +53,7 @@ const FormPage = () => {
     <div>
       <form
         onSubmit={handleSubmit(handleFormDetails)}
-        className="my-3 p-2 text-sm bg-gray-50 rounded-md"
+        className="my-3 p-2 text-sm bg-secondary rounded-md"
       >
         {InputItems.map((item, i) => (
           <InputFieldItem

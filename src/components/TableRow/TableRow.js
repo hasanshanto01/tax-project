@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import "./TableRow.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
 
@@ -18,7 +18,7 @@ const TableRow = ({ item, rowNum, handleEditBtn, handleDeleteBtn }) => {
       <td>{sequence}</td>
       <td className="flex gap-2">
         <button
-          className="btn btn-xs btn-outline btn-success"
+          className="btn btn-xs btn-outline btn-primary"
           onClick={() => handleEditBtn(id)}
         >
           <FontAwesomeIcon icon={faPenToSquare} className="w-4 h-4" />
