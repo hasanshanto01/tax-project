@@ -2,6 +2,7 @@ import React from "react";
 import userImg from "../../Asstes/user.jpg";
 import { Link } from "react-router-dom";
 import SideBar from "../SideBar/SideBar";
+import logo from "../../Asstes/logo.jpg";
 
 const Navbar = () => {
   return (
@@ -28,14 +29,16 @@ const Navbar = () => {
             tabIndex={0}
             className="dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52 flex justify-center"
           >
-            <SideBar mxValue={0}></SideBar>
+            <SideBar></SideBar>
           </div>
         </div>
         <Link
           to="/"
-          className="btn btn-ghost normal-case text-2xl text-success font-bold"
+          className="btn btn-ghost normal-case text-xl text-success font-bold"
         >
-          Tax House
+          {/* Tax House */}
+          <img src={logo} className="w-8"></img>
+          <span>E-Laywers</span>
         </Link>
       </div>
       <div className="flex-none gap-2">

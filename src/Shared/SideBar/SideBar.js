@@ -1,8 +1,7 @@
 import React from "react";
 import LinkItem from "../../components/LinkItem/LinkItem";
 
-const SideBar = ({ mxValue }) => {
-  console.log(mxValue);
+const SideBar = () => {
   const menuList = [
     {
       title: "Dashboard",
@@ -12,10 +11,14 @@ const SideBar = ({ mxValue }) => {
       title: "Personal info",
       path: "/personalInfo",
     },
+    {
+      title: "Admin",
+      path: "/admin",
+    },
   ];
 
   return (
-    <ul className={`mx-${mxValue}`}>
+    <ul className="lg:mx-7">
       {menuList.map((menu, i) => (
         <LinkItem key={i} menu={menu}></LinkItem>
       ))}

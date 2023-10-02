@@ -6,11 +6,16 @@ import Dashboard from "../Layouts/Dashboard";
 import FolderPage from "../Pages/FolderPgae/FolderPage";
 import BusinessForm from "../Pages/BusinessForm/BusinessForm";
 import FormPage2 from "../Pages/Form/FormPage2";
+import AdminPage from "../Pages/AdminPage/AdminPage/AdminPage";
+import ErrorPage from "../Shared/ErrorPage/ErrorPage";
+import CategoryDescription from "../Pages/AdminPage/CategorySetUp/CategoryDescription";
+import Slabs from "../Pages/AdminPage/SlabsSetup/Slabs";
 
 export const routes = createBrowserRouter([
   {
     path: "/",
     element: <Main></Main>,
+    errorElement: <ErrorPage></ErrorPage>,
     children: [
       {
         path: "/",
@@ -41,6 +46,18 @@ export const routes = createBrowserRouter([
       {
         path: "/personalInfo",
         element: <PersonalInfo></PersonalInfo>,
+      },
+      {
+        path: "/admin",
+        element: <AdminPage></AdminPage>,
+      },
+      {
+        path: "/categorySetup",
+        element: <CategoryDescription></CategoryDescription>,
+      },
+      {
+        path: "/slabs",
+        element: <Slabs></Slabs>,
       },
     ],
   },

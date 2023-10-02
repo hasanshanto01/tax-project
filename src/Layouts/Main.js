@@ -8,8 +8,8 @@ const Main = () => {
     <div>
       <Navbar></Navbar>
       <div className="flex">
-        <div className="w-[14%] h-screen pt-5 bg-gray-50 hidden lg:block border border-yellow-300">
-          <SideBar mxValue={7}></SideBar>
+        <div className="w-[14%] h-screen pt-5 bg-gray-50 hidden lg:block">
+          <SideBar></SideBar>
         </div>
         <Outlet></Outlet>
       </div>

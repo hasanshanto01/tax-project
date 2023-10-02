@@ -13,11 +13,7 @@ const PersonalInfo = () => {
   );
   const [selectedGaurdianOption, setSelectedGaurdianOption] = useState("No");
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+  const { register, handleSubmit } = useForm();
 
   const handlePersonalInfo = (data) => {
     console.log(data);
@@ -264,23 +260,19 @@ const PersonalInfo = () => {
 
         {/* Resident field */}
         <div className="w-full lg:w-3/4 my-2 flex items-center">
-          <label className="w-3/5 p-[6px]">Resident Status</label>
+          <label className="w-3/5 p-[6px]">
+            Resident Status
+            <span className="text-red-500">*</span>
+          </label>
           <select
             defaultValue="resident"
             className="w-2/5 p-1 border border-success rounded-sm focus:outline-none"
-            {...register("residentStatus", {
-              required: "Resident status is required",
-            })}
+            {...register("residentStatus")}
           >
             <option value="resident">Resident</option>
             <option value="nonResident">Non-resident</option>
           </select>
         </div>
-        {errors.residentStatus && (
-          <p className="text-red-500 text-right mr-5">
-            <small>{errors.residentStatus.message}</small>
-          </p>
-        )}
         {/* Resident field */}
         <br />
         {/* City Field */}
@@ -343,7 +335,7 @@ const PersonalInfo = () => {
         </div>
         {/* Guardian Field */}
         <br />
-        <SubmitBtn></SubmitBtn>
+        <SubmitBtn btnText={"Submit"}></SubmitBtn>
       </form>
     </div>
   );

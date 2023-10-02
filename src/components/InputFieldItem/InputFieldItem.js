@@ -30,37 +30,13 @@ const InputFieldItem = ({ item, register, handleCalculativeInput }) => {
       )}
 
       {/* [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none  */}
-      {/* {type === "number" && !calculativeStatus && (
-        <input
-          type={`${type}`}
-          defaultValue="0"
-          min="0"
-          className="w-2/5 p-1 border border-success rounded-sm focus:outline-none"
-          {...register(`${registerName}`, {
-            required: requiredStatus,
-          })}
-        />
-      )}
-
-      {type === "number" && calculativeStatus && (
-        <input
-          type={`${type}`}
-          defaultValue="0"
-          min="0"
-          className="w-2/5 p-1 border border-success rounded-sm focus:outline-none"
-          {...register(`${registerName}`, {
-            required: requiredStatus,
-          })}
-          onKeyUp={(e) => handleCalculativeInput(e)}
-        />
-      )} */}
 
       {type === "number" && !defaultValueNone && (
         <input
           type={type}
           defaultValue="0"
           min="0"
-          className="w-2/5 p-1 border border-success rounded-sm focus:outline-none"
+          className="w-2/5 p-1 border border-success rounded-sm focus:outline-none "
           {...register(`${registerName}`, {
             required: requiredStatus,
           })}

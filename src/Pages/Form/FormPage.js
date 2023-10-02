@@ -4,11 +4,7 @@ import InputFieldItem from "../../components/InputFieldItem/InputFieldItem";
 import SubmitBtn from "../../components/SubmitBtn/SubmitBtn";
 
 const FormPage = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+  const { register, handleSubmit } = useForm();
 
   const handleFormDetails = (data) => {
     console.log(data);
@@ -66,7 +62,7 @@ const FormPage = () => {
             register={register}
           ></InputFieldItem>
         ))}
-        <SubmitBtn></SubmitBtn>
+        <SubmitBtn btnText={"Submit"}></SubmitBtn>
       </form>
     </div>
   );
