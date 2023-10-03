@@ -15,6 +15,10 @@ const SideBar = () => {
       title: "Admin",
       path: "/admin",
     },
+    {
+      title: "Report",
+      path: "/report",
+    },
   ];
 
   return (

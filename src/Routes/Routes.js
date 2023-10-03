@@ -13,6 +13,8 @@ import Slabs from "../Pages/AdminPage/SlabsSetup/Slabs";
 import LoginPage from "../Pages/LoginPage/LoginPage";
 import SignupPage from "../Pages/SignupPage/SignupPage";
 import PdfTest from "../Pages/PdfTest/PdfTest";
+import ReportPage from "../Pages/ReportPage/ReportPage";
+import SalarySchema from "../Pages/ReportSchema/SalarySchema";
 
 export const routes = createBrowserRouter([
   {
@@ -61,6 +63,14 @@ export const routes = createBrowserRouter([
       {
         path: "/slabs",
         element: <Slabs></Slabs>,
+      },
+      {
+        path: "/report",
+        element: <ReportPage></ReportPage>,
+      },
+      {
+        path: "/report/salarySchema",
+        element: <SalarySchema></SalarySchema>,
       },
     ],
   },
