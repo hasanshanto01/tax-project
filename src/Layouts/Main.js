@@ -5,10 +5,10 @@ import SideBar from "../Shared/SideBar/SideBar";
 
 const Main = () => {
   return (
-    <div>
+    <div className="">
       <Navbar></Navbar>
       <div className="flex">
-        <div className="w-[14%] h-screen pt-5 bg-secondary hidden lg:block">
+        <div className="w-[14%] pt-5 bg-secondary hidden lg:block">
           <SideBar></SideBar>
         </div>
         <Outlet></Outlet>

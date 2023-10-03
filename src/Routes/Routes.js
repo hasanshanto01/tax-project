@@ -12,6 +12,7 @@ import CategoryDescription from "../Pages/AdminPage/CategorySetUp/CategoryDescri
 import Slabs from "../Pages/AdminPage/SlabsSetup/Slabs";
 import LoginPage from "../Pages/LoginPage/LoginPage";
 import SignupPage from "../Pages/SignupPage/SignupPage";
+import PdfTest from "../Pages/PdfTest/PdfTest";
 
 export const routes = createBrowserRouter([
   {
@@ -70,5 +71,9 @@ export const routes = createBrowserRouter([
   {
     path: "/signup",
     element: <SignupPage></SignupPage>,
+  },
+  {
+    path: "/pdf",
+    element: <PdfTest></PdfTest>,
   },
 ]);
