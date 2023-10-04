@@ -1,7 +1,8 @@
 import React, { useRef } from "react";
 import { useReactToPrint } from "react-to-print";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faDownload } from "@fortawesome/free-solid-svg-icons";
+import { faDownload, faArrowLeftLong } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
 
 const SalarySchema = () => {
   const tableDatas = [
@@ -138,15 +139,6 @@ const SalarySchema = () => {
     },
   ];
 
-  const table2Span1 = table2Datas.length;
-
-  //   console.log(tableDatas.length);
-  //   let total = 0;
-  //   {
-  //     tableDatas.forEach((data) => {
-  //       total += data.income;
-  //     });
-  //   }
   const handleSum = (arr) => {
     let sum = 0;
     arr.forEach((element) => {
@@ -173,6 +165,11 @@ const SalarySchema = () => {
   //   console.log(total);
   //   console.log(taxExemptedIncome, taxableIncome);
 
+  const tinNumber = "123456789012";
+  // Array.from(tinNumber).forEach((element) => {
+  //   console.log(element);
+  // });
+
   const componentRef = useRef();
 
   const handlePrint = useReactToPrint({
@@ -182,7 +179,12 @@ const SalarySchema = () => {
 
   return (
     <div className="w-full mb-10">
-      <div className="text-right mr-20 mt-5 mb-2 hidden lg:block">
+      <div className="justify-between mr-20 mt-5 mb-2 hidden lg:flex">
+        <div className="ml-20">
+          <Link to="/report" className="btn btn-sm btn-outline btn-primary">
+            <FontAwesomeIcon icon={faArrowLeftLong} className="w-4 h-4" />
+          </Link>
+        </div>
         <button
           className="btn btn-sm btn-outline btn-primary"
           onClick={handlePrint}
@@ -191,7 +193,7 @@ const SalarySchema = () => {
         </button>
       </div>
       <div
-        className="w-full lg:w-[70%] lg:mx-auto my-3 lg:my-0 mb-6 p-3 text-sm"
+        className="w-full lg:w-[65%] lg:mx-auto my-3 lg:my-0 mb-6 p-3 text-sm"
         ref={componentRef}
       >
         <div>
@@ -207,8 +209,22 @@ const SalarySchema = () => {
               Name of the Assessee:{" "}
               <span className="ml-3 font-bold">Abu Babu</span>
             </p>
-            <div>
+            <div className="flex justify-end items-center gap-2">
               <p className="font-bold">TIN:</p>
+              <table className="border-collapse border border-slate-400 ...">
+                <thead>
+                  <th></th>
+                </thead>
+                <tbody>
+                  <tr>
+                    {Array.from(tinNumber).map((element, i) => (
+                      <td className="border border-black w-6 text-center font-bold">
+                        {element}
+                      </td>
+                    ))}
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
           <div className="mt-2">
@@ -226,14 +242,12 @@ const SalarySchema = () => {
                 </tr>
               </thead>
               <tbody>
-                {/* <tr>
-                  <td className="border border-slate-300 ...">Indiana</td>
-                  <td className="border border-slate-300 ...">Indianapolis</td>
-                </tr> */}
                 {tableDatas.map((data, i) => (
                   <tr key={i}>
                     <td className="border border-black text-center">{i + 1}</td>
-                    <td className="border border-black">{data.particulars}</td>
+                    <td className="border border-black pl-2">
+                      {data.particulars}
+                    </td>
                     <td className="border border-black text-right w-16 lg:w-32 pr-2">
                       {data.income}
                     </td>
@@ -261,14 +275,14 @@ const SalarySchema = () => {
                   <td className="border border-black text-center">
                     {tableDatas.length + 1}
                   </td>
-                  <td className="border border-black">Total</td>
+                  <td className="border border-black pl-2">Total</td>
                   <td className="border border-black text-right w-16 lg:w-32 pr-2">
                     {total}
                   </td>
-                  <td className="border border-black text-right w-16 lg:w-32">
+                  <td className="border border-black text-right w-16 lg:w-32 pr-2">
                     {taxExemptedIncome}
                   </td>
-                  <td className="border border-black text-right w-16 lg:w-32">
+                  <td className="border border-black text-right w-16 lg:w-32 pr-2">
                     {taxableIncome}
                   </td>
                 </tr>
@@ -297,7 +311,9 @@ const SalarySchema = () => {
                 {table2Datas.map((data, i) => (
                   <tr key={i}>
                     <td className="border border-black text-center">{i + 1}</td>
-                    <td className="border border-black">{data.particulars}</td>
+                    <td className="border border-black pl-2">
+                      {data.particulars}
+                    </td>
                     <td className="border border-black text-right w-16 lg:w-32 pr-2">
                       {data.income}
                     </td>
@@ -310,7 +326,7 @@ const SalarySchema = () => {
                   <td className="border border-black text-center">
                     {table2Datas.length + 1}
                   </td>
-                  <td className="border border-black">
+                  <td className="border border-black pl-2">
                     Total salary income (aggregate of 1 to 12){" "}
                   </td>
                   <td rowSpan={3}></td>
@@ -322,7 +338,7 @@ const SalarySchema = () => {
                   <td className="border border-black text-center">
                     {table2Datas.length + 2}
                   </td>
-                  <td className="border border-black">
+                  <td className="border border-black pl-2">
                     Exempted Salary (As per 6th schedule Part 1)
                   </td>
                   <td className="border border-black text-right w-16 lg:w-32 pr-2">
@@ -333,7 +349,7 @@ const SalarySchema = () => {
                   <td className="border border-black text-center">
                     {table2Datas.length + 3}
                   </td>
-                  <td className="border border-black">
+                  <td className="border border-black pl-2">
                     Total Income from Salary (13-14)
                   </td>
                   <td className="border border-black text-right w-16 lg:w-32 pr-2">
@@ -345,7 +361,13 @@ const SalarySchema = () => {
           </div>
         </div>
       </div>
-      <div className="text-center mt-6 mb-16 block lg:hidden">
+      <div className="mt-6 mb-16 flex justify-center gap-8 lg:hidden">
+        <Link
+          to="/report"
+          className="w-[150px] btn btn-sm btn-outline btn-primary"
+        >
+          <FontAwesomeIcon icon={faArrowLeftLong} className="w-4 h-4" />
+        </Link>
         <button
           className="w-[150px] btn btn-sm btn-outline btn-primary"
           onClick={handlePrint}

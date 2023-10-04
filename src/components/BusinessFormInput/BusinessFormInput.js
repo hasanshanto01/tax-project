@@ -1,30 +1,15 @@
 import React from "react";
 
-const InputFieldItem = ({ item, register }) => {
+const BusinessFormInput = ({ item, register }) => {
   const { labelName, registerName, type, requiredStatus, defaultValueNone } =
     item;
-  // console.log(requiredStatus);
 
   return (
-    <div className="w-full lg:w-3/4 my-2 flex items-center">
+    <div className="w-full my-2 pr-2 flex items-center">
       <label className="w-3/5 p-[6px]">
         {labelName}
         {requiredStatus && <span className="text-red-500">*</span>}
       </label>
-
-      {type === "text" && (
-        <input
-          type={type}
-          placeholder="Type here"
-          className="w-2/5 p-1 border border-primary rounded-sm focus:outline-none"
-          {...register(`${registerName}`, {
-            required: requiredStatus,
-          })}
-        />
-      )}
-
-      {/* [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none  */}
-
       {type === "number" && !defaultValueNone && (
         <input
           type={type}
@@ -51,4 +36,4 @@ const InputFieldItem = ({ item, register }) => {
   );
 };
 
-export default InputFieldItem;
+export default BusinessFormInput;

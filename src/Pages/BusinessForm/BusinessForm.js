@@ -1,69 +1,18 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import InputFieldItem from "../../components/InputFieldItem/InputFieldItem";
+import SubmitBtn from "../../components/SubmitBtn/SubmitBtn";
+import BusinessFormInput from "../../components/BusinessFormInput/BusinessFormInput";
 
 const BusinessForm = () => {
   const [businessFormDetails, setBusinessFormDetails] = useState([]);
   // let businessFormDetails = [];
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+  const { register, handleSubmit } = useForm();
 
   const handleBusinessInfo = (data) => {
     console.log(data);
   };
-
-  const handleCalculativeInput = (e) => {
-    // console.log(e.target);
-    // console.log(e.target.name);
-    const registerName = e.target.name;
-    const value = e.target.value;
-
-    if (registerName === "revenue") {
-      const revenue = {
-        title: registerName,
-        revenueValue: value,
-      };
-      const updatedBusinessFormDetails = [...businessFormDetails];
-      updatedBusinessFormDetails.revenueDetails = revenue;
-      setBusinessFormDetails(updatedBusinessFormDetails);
-
-      // const test = {
-      //   registerName: "tn",
-      //   value: 1,
-      // };
-      // businessFormDetails.push(1);
-      // if
-      // setRevenueDetails({
-      //   registerName,
-      //   value,
-      // });
-      // setBusinessFormDetails(test);
-    }
-  };
-
-  console.log("revenueD:", businessFormDetails?.revenueDetails?.title);
-
-  if (businessFormDetails?.revenueDetails?.title === "revenue") {
-    // console.log("inside r");
-    const revenueDetails = businessFormDetails.revenueDetails;
-    const revenueValue = revenueDetails.revenueValue;
-    const costOfSalesValue = revenueValue * 0.85;
-    const grossProfitValue = revenueValue - costOfSalesValue;
-    const administrativeExpenses = revenueValue * 0.05;
-    const updatedRevenueDetails = {
-      ...revenueDetails,
-      costOfSalesValue,
-      grossProfitValue,
-      administrativeExpenses,
-    };
-    setBusinessFormDetails(revenueDetails.updatedRevenueDetails);
-  }
-
-  console.log("revenueA:", businessFormDetails);
 
   return (
     <div>
@@ -91,51 +40,230 @@ const BusinessForm = () => {
             labelName: "Type of main business or profession",
             registerName: "businessType",
             type: "text",
-            requiredStatus: false,
           }}
           register={register}
         ></InputFieldItem>
 
-        <div className="w-3/4 my-2 flex items-center">
+        <div className="w-full lg:w-3/4 my-2 flex items-center">
           <label className="w-3/5 p-[6px]">Buseness Address</label>
           <textarea
-            className="w-2/5 p-1 border border-success rounded-sm focus:outline-none"
+            className="w-2/5 p-1 border border-primary rounded-sm focus:outline-none"
             placeholder="Type here"
             {...register("busenessAddress")}
           ></textarea>
         </div>
 
-        <div className="border border-red-500  my-4">
-          <div className="w-3/4 text-gray-200 font-bold flex items-center bg-success">
+        <div className="w-full lg:w-3/4 my-4 border border-primary">
+          <div className="w-full text-secondary font-bold flex items-center bg-primary">
             <label className="w-3/5 p-[6px]">Income Statement</label>
             <label className="w-2/5 p-[6px]">BDT</label>
           </div>
 
-          <InputFieldItem
+          <BusinessFormInput
             item={{
               labelName: "Revenue",
               registerName: "revenue",
               type: "number",
-              requiredStatus: false,
-              calculativeStatus: true,
             }}
             register={register}
-            handleCalculativeInput={handleCalculativeInput}
-          ></InputFieldItem>
-          <InputFieldItem
+          ></BusinessFormInput>
+          <BusinessFormInput
             item={{
               labelName: "Less: Cost of sales",
               registerName: "costOfSales",
               type: "number",
-              requiredStatus: false,
             }}
             register={register}
-          ></InputFieldItem>
+          ></BusinessFormInput>
+          <BusinessFormInput
+            item={{
+              labelName: "Gross profit",
+              registerName: "grossProfit",
+              type: "number",
+            }}
+            register={register}
+          ></BusinessFormInput>
+          <BusinessFormInput
+            item={{
+              labelName: "Administrative expenses",
+              registerName: "administrativeExpenses",
+              type: "number",
+            }}
+            register={register}
+          ></BusinessFormInput>
+          <BusinessFormInput
+            item={{
+              labelName: "Bad debt expense",
+              registerName: "badDebtExpense",
+              type: "number",
+            }}
+            register={register}
+          ></BusinessFormInput>
+          <BusinessFormInput
+            item={{
+              labelName: "Net profit",
+              registerName: "netProfit",
+              type: "number",
+            }}
+            register={register}
+          ></BusinessFormInput>
+        </div>
+        <div className="border border-primary w-full lg:w-3/4 my-4">
+          <div className="w-full text-secondary font-bold flex items-center bg-primary">
+            <label className="w-3/5 p-[6px]">Total Assets</label>
+            <input
+              type="number"
+              defaultValue="0"
+              min="0"
+              className="w-2/5 p-1 mr-2 border-0 rounded-sm text-secondary bg-primary focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+              {...register("totalAssets", {
+                required: true,
+              })}
+            />
+          </div>
+
+          <BusinessFormInput
+            item={{
+              labelName: "Property, Plant and Equipment",
+              registerName: "propertyPlant&Equipment",
+              type: "number",
+            }}
+            register={register}
+          ></BusinessFormInput>
+          <BusinessFormInput
+            item={{
+              labelName: "Loan to Others",
+              registerName: "loanToOthers",
+              type: "number",
+            }}
+            register={register}
+          ></BusinessFormInput>
+          <BusinessFormInput
+            item={{
+              labelName: "Advances, Deposits and Receivable",
+              registerName: "advancesDeposits&Receivable",
+              type: "number",
+            }}
+            register={register}
+          ></BusinessFormInput>
+          <BusinessFormInput
+            item={{
+              labelName: "Closing balanceInventory",
+              registerName: "closingBalanceInventory",
+              type: "number",
+            }}
+            register={register}
+          ></BusinessFormInput>
+          <BusinessFormInput
+            item={{
+              labelName: "Bank Balance",
+              registerName: "bankBalance",
+              type: "number",
+            }}
+            register={register}
+          ></BusinessFormInput>
+          <BusinessFormInput
+            item={{
+              labelName: "Cash in Hand",
+              registerName: "cashInHand",
+              type: "number",
+            }}
+            register={register}
+          ></BusinessFormInput>
+        </div>
+        <div className="border border-primary w-full lg:w-3/4 my-4">
+          <div className="w-full text-secondary font-bold flex items-center bg-primary">
+            <label className="w-3/5 p-[6px]">
+              Total Equity and Liabilities
+            </label>
+            <input
+              type="number"
+              defaultValue="0"
+              min="0"
+              className="w-2/5 p-1 mr-2 border-0 rounded-sm text-secondary bg-primary focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+              {...register("totalEquity&Liabilities", {
+                required: true,
+              })}
+            />
+          </div>
+
+          <BusinessFormInput
+            equity
+            and
+            liabilitieseldItem
+            item={{
+              labelName: "Total equity",
+              registerName: "totalEquity",
+              type: "number",
+            }}
+            register={register}
+          ></BusinessFormInput>
+          <BusinessFormInput
+            item={{
+              labelName: "Opening balance Capital",
+              registerName: "openingBalanceCapital",
+              type: "number",
+            }}
+            register={register}
+          ></BusinessFormInput>
+          <BusinessFormInput
+            item={{
+              labelName: "Drawing during the income year",
+              registerName: "drawingDuringTheIncomeYear",
+              type: "number",
+            }}
+            register={register}
+          ></BusinessFormInput>
+        </div>
+        <div className="border border-primary w-full lg:w-3/4 my-4">
+          <div className="w-full text-secondary font-bold flex items-center bg-primary">
+            <label className="w-3/5 p-[6px]">Liabilities</label>
+            <input
+              type="number"
+              defaultValue="0"
+              min="0"
+              className="w-2/5 p-1 mr-2 border-0 rounded-sm text-secondary bg-primary focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+              {...register("totalAssets", {
+                required: true,
+              })}
+            />
+          </div>
+
+          <BusinessFormInput
+            item={{
+              labelName: "Long term loan",
+              registerName: "longTermLoan",
+              type: "number",
+            }}
+            register={register}
+          ></BusinessFormInput>
+          <BusinessFormInput
+            item={{
+              labelName: "Short-term borrowings",
+              registerName: "shortTermBorrowings",
+              type: "number",
+            }}
+            register={register}
+          ></BusinessFormInput>
+          <BusinessFormInput
+            item={{
+              labelName: "Liability for other",
+              registerName: "liabilityForOther",
+              type: "number",
+            }}
+            register={register}
+          ></BusinessFormInput>
+          <BusinessFormInput
+            item={{
+              labelName: "Differences",
+              registerName: "differences",
+              type: "number",
+            }}
+            register={register}
+          ></BusinessFormInput>
         </div>
 
-        <div className="flex justify-center">
-          <button className="btn btn-success my-3 w-[150px]">Submit</button>
-        </div>
+        <SubmitBtn btnText={"Submit"}></SubmitBtn>
       </form>
       {/* business info */}
     </div>

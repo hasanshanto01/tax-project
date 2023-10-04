@@ -1,7 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
-import logo from "../../Asstes/logo.jpg";
+import logo from "../../Assets/logo.jpg";
 
 const LoginPage = () => {
   const { register, handleSubmit } = useForm();

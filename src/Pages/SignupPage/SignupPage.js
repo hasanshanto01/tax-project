@@ -1,13 +1,56 @@
 import React from "react";
-import logo from "../../Asstes/logo.jpg";
+import logo from "../../Assets/logo.jpg";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 const SignupPage = () => {
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
-  const handleLoginForm = (data) => {
-    console.log(data);
+  const regExp = /^0[0-9].*$/; // for start with 0
+  const passRegExp = /^.{8,}$/;
+
+  const handleSignupForm = (formData) => {
+    console.log(formData);
+    if (
+      formData.phone_number.length !== 11 ||
+      regExp.test(formData.phone_number) === false
+    ) {
+      return alert("Invalid phone number");
+    } else {
+      const phone = formData.phone_number.toString();
+      const updatedPhone = "+88" + phone;
+      formData.phone_number = updatedPhone;
+    }
+    if (passRegExp.test(formData.password) === false) {
+      return alert("Password must have at least 8 characters");
+    }
+    console.log(formData);
+    // fetch("http://127.0.0.1:8000/api/v1/signup/", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify(formData),
+    // })
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     console.log("res:", data);
+    //   });
+    fetch("http://127.0.0.1:8000/api/v1/signup/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+      });
   };
 
   return (
@@ -17,7 +60,7 @@ const SignupPage = () => {
           <img src={logo} alt="" className="rounded-md"></img>
         </div>
         <form
-          onSubmit={handleSubmit(handleLoginForm)}
+          onSubmit={handleSubmit(handleSignupForm)}
           className="w-3/4 mx-auto mt-20 mb-3 p-2 text-sm"
         >
           <div className="my-2">
@@ -45,7 +88,7 @@ const SignupPage = () => {
               type="number"
               placeholder="Phone"
               className="w-full p-[6px] border border-primary rounded-md focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-              {...register("phone", {
+              {...register("phone_number", {
                 required: true,
               })}
             />
@@ -59,6 +102,9 @@ const SignupPage = () => {
                 required: true,
               })}
             />
+            {errors.password && (
+              <span>Password must have at least 8 characters</span>
+            )}
           </div>
 
           <div className="flex justify-center my-2">

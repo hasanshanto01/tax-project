@@ -15,9 +15,7 @@ const PersonalInfo = () => {
 
   const { register, handleSubmit } = useForm();
 
-  const handlePersonalInfo = (data) => {
-    console.log(data);
-  };
+  const regExp = /^0[0-9].*$/; // for start with 0
 
   const cityItems = [
     {
@@ -40,27 +38,27 @@ const PersonalInfo = () => {
   const areYouItems = [
     {
       lableName: "General – Individuals & Firms",
-      registerName: "areYou",
+      registerName: "are_you",
       value: "General – Individuals & Firms",
     },
     {
       lableName: "Women,and senior citizens (65+)",
-      registerName: "areYou",
+      registerName: "are_you",
       value: "Women,and senior citizens (65+)",
     },
     {
       lableName: "Third gender",
-      registerName: "areYou",
+      registerName: "are_you",
       value: "Third gender",
     },
     {
       lableName: "Physically challenged persons",
-      registerName: "areYou",
+      registerName: "are_you",
       value: "Physically challenged persons",
     },
     {
       lableName: "War-wounded gazetted freedom fighters",
-      registerName: "areYou",
+      registerName: "are_you",
       value: "War-wounded gazetted freedom fighters",
     },
   ];
@@ -68,12 +66,12 @@ const PersonalInfo = () => {
   const gaurdianItems = [
     {
       lableName: "Yes",
-      registerName: "gaurdian",
+      registerName: "legal_guardian",
       value: "Yes",
     },
     {
       lableName: "No",
-      registerName: "gaurdian",
+      registerName: "legal_guardian",
       value: "No",
     },
   ];
@@ -82,11 +80,43 @@ const PersonalInfo = () => {
     // console.log(e.target.name);
     if (e.target.name === "city") {
       setSelectedCityOption(e.target.value);
-    } else if (e.target.name === "areYou") {
+    } else if (e.target.name === "are_you") {
       setSelectedAreYouOption(e.target.value);
-    } else if (e.target.name === "gaurdian") {
+    } else if (e.target.name === "legal_guardian") {
       setSelectedGaurdianOption(e.target.value);
     }
+  };
+
+  const handlePersonalInfo = (data) => {
+    console.log(data);
+    console.log(Object.keys(data).length);
+    if (
+      data.phone_number.length !== 11 &&
+      regExp.test(data.phone_number) === false
+    ) {
+      alert("Invalid phone number");
+    } else {
+      const phone = data.phone_number.toString();
+      const updatedPhone = "+88" + phone;
+      data.phone_number = parseInt(updatedPhone);
+    }
+    if (data.tin.length !== 12) {
+      alert("Invalid TIN number");
+    }
+
+    fetch("http://127.0.0.1:8000/api/v1/personal-details/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization:
+          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk2NDk0ODk0LCJpYXQiOjE2OTY0MDg0OTQsImp0aSI6IjhiYjgzOGI0ZjA0MzRjNGY5ZTZkOGQxNmI5YjQ2Nzg4IiwidXNlcl9pZCI6MX0.1_dz4nNrCvhvaCBnJ2tktHW90rHFR-L2siE2Tu1saBE",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((res) => res.json())
+      .then((resData) => {
+        console.log(resData);
+      });
   };
 
   return (
@@ -105,7 +135,7 @@ const PersonalInfo = () => {
             type="date"
             defaultValue={new Date().toISOString().substring(0, 10)}
             className="w-2/5 p-1 border border-primary rounded-sm focus:outline-none"
-            {...register("date")} /* ,{valueAsDate: true,} */
+            {...register("current_date")} /* ,{valueAsDate: true,} */
             readOnly
           />
         </div>
@@ -118,7 +148,7 @@ const PersonalInfo = () => {
             type="text"
             defaultValue="30-Jun-23"
             className="w-2/5 p-1 border border-primary rounded-sm focus:outline-none"
-            {...register("incomeYear")}
+            {...register("income_year")}
             readOnly
           />
         </div>
@@ -131,7 +161,7 @@ const PersonalInfo = () => {
             type="text"
             defaultValue="2023-24"
             className="w-2/5 p-1 border border-primary rounded-sm focus:outline-none"
-            {...register("assessmentYear")}
+            {...register("assessment_year")}
             readOnly
           />
         </div>
@@ -141,7 +171,7 @@ const PersonalInfo = () => {
         <InputFieldItem
           item={{
             labelName: "Name of the Assessee",
-            registerName: "assesseeName",
+            registerName: "assess_name",
             type: "text",
             requiredStatus: true,
           }}
@@ -169,7 +199,7 @@ const PersonalInfo = () => {
         <InputFieldItem
           item={{
             labelName: "NID/Passport Number (If no NID)",
-            registerName: "nidOrPassport",
+            registerName: "nid",
             type: "number",
             requiredStatus: true,
             defaultValueNone: true,
@@ -198,8 +228,8 @@ const PersonalInfo = () => {
         {/* mobile */}
         <InputFieldItem
           item={{
-            labelName: "Mobile",
-            registerName: "mobile",
+            labelName: "Phone Number",
+            registerName: "phone_number",
             type: "number",
             requiredStatus: true,
             defaultValueNone: true,
@@ -209,15 +239,14 @@ const PersonalInfo = () => {
         {/* mobile */}
 
         {/* email */}
-        <div className="w-full lg:w-3/4 my-2 flex items-center">
+        {/* <div className="w-full lg:w-3/4 my-2 flex items-center">
           <label className="w-3/5 p-[6px]">Email</label>
           <input
             type="email"
-            // defaultValue={new Date().toISOString().substring(0, 10)}
             className="w-2/5 p-1 border border-primary rounded-sm focus:outline-none"
             {...register("email")}
           />
-        </div>
+        </div> */}
         {/* email */}
 
         {/* tin */}
@@ -250,7 +279,7 @@ const PersonalInfo = () => {
         <InputFieldItem
           item={{
             labelName: "Tax Zone",
-            registerName: "taxZone",
+            registerName: "tax_zone",
             type: "text",
             requiredStatus: true,
           }}
@@ -267,7 +296,7 @@ const PersonalInfo = () => {
           <select
             defaultValue="resident"
             className="w-2/5 p-1 border border-primary rounded-sm focus:outline-none"
-            {...register("residentStatus")}
+            {...register("resident_status")}
           >
             <option value="resident">Resident</option>
             <option value="nonResident">Non-resident</option>

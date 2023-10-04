@@ -33,11 +33,19 @@ const ReportPage = () => {
               <tr key={i}>
                 <td>{i + 1}</td>
                 <td>
-                  <Link
+                  {/* <Link
                     to={`/report/${report.path}`}
                     className="hover:underline"
                   >
                     {report.reportName}
+                  </Link> */}
+                  {report.reportName}
+                </td>
+                <td>
+                  <Link to={`/report/${report.path}`}>
+                    <button className="btn btn-xs btn-outline btn-primary">
+                      View Report
+                    </button>
                   </Link>
                 </td>
               </tr>

@@ -2,7 +2,7 @@ import React from "react";
 import userImg from "../../Asstes/user.jpg";
 import { Link } from "react-router-dom";
 import SideBar from "../SideBar/SideBar";
-import logo from "../../Asstes/logo.jpg";
+import logo from "../../Assets/logo.jpg";
 
 const Navbar = () => {
   return (
