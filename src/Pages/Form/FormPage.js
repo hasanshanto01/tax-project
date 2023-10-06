@@ -1,9 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import InputFieldItem from "../../components/InputFieldItem/InputFieldItem";
 import SubmitBtn from "../../components/SubmitBtn/SubmitBtn";
+import { useLoaderData } from "react-router-dom";
+import FormInput from "../../components/FormInput/FormInput";
 
 const FormPage = () => {
+  const categorySetupData = useLoaderData();
+  console.log(categorySetupData);
+
   const { register, handleSubmit } = useForm();
 
   const handleFormDetails = (data) => {
@@ -55,12 +60,8 @@ const FormPage = () => {
         onSubmit={handleSubmit(handleFormDetails)}
         className="my-3 p-2 text-sm bg-secondary rounded-md"
       >
-        {InputItems.map((item, i) => (
-          <InputFieldItem
-            key={i}
-            item={item}
-            register={register}
-          ></InputFieldItem>
+        {categorySetupData.map((item, i) => (
+          <FormInput key={i} item={item} register={register}></FormInput>
         ))}
         <SubmitBtn btnText={"Submit"}></SubmitBtn>
       </form>

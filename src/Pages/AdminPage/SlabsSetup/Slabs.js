@@ -6,15 +6,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeftLong } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import InputFieldItem from "../../../components/InputFieldItem/InputFieldItem";
+import toast, { Toaster } from "react-hot-toast";
 
 const Slabs = () => {
   const navigate = useNavigate();
 
   const { register, handleSubmit } = useForm();
-
-  const handleSlabsDetails = (data) => {
-    console.log(data);
-  };
 
   const handleBackBtn = () => {
     navigate("/admin");
@@ -23,8 +20,8 @@ const Slabs = () => {
   const selectItems = [
     {
       id: 1,
-      title: "General – Individuals & Firms",
-      value: "General – Individuals & Firms",
+      title: "General - Individuals & Firms",
+      value: "General - Individuals & Firms",
     },
     {
       id: 2,
@@ -48,6 +45,28 @@ const Slabs = () => {
     },
   ];
 
+  const handleSlabs = (data) => {
+    console.log(data);
+    data.percentage = parseFloat(data.percentage);
+
+    fetch("http://127.0.0.1:8000/api/v1/slab-create/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
+      body: JSON.stringify(data),
+    })
+      .then((res) => res.json())
+      .then((resData) => {
+        console.log("res:", resData);
+        toast.success("Slab created successfully");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <div className="w-full lg:w-[82%] mx-8 my-5">
       <button
@@ -57,7 +76,7 @@ const Slabs = () => {
         <FontAwesomeIcon icon={faArrowLeftLong} className="w-5 h-5" />
       </button>
       <form
-        onSubmit={() => handleSubmit(handleSlabsDetails)}
+        onSubmit={handleSubmit(handleSlabs)}
         className="my-3 p-2 text-sm bg-secondary rounded-md"
       >
         {/* select one */}
@@ -65,7 +84,7 @@ const Slabs = () => {
           <label className="w-3/5 p-[6px]">Select One</label>
           <select
             className="w-2/5 p-1 border border-primary rounded-sm focus:outline-none"
-            {...register("category_name", { required: true })}
+            {...register("select_one", { required: true })}
           >
             {selectItems.map((item) => (
               <option key={item.id} value={item.value}>
@@ -78,8 +97,8 @@ const Slabs = () => {
 
         <InputFieldItem
           item={{
-            labelName: "Title ",
-            registerName: "title ",
+            labelName: "Title",
+            registerName: "title",
             type: "text",
           }}
           register={register}
@@ -87,8 +106,8 @@ const Slabs = () => {
 
         <InputFieldItem
           item={{
-            labelName: "Amount  ",
-            registerName: "amount  ",
+            labelName: "Amount",
+            registerName: "amount",
             type: "number",
           }}
           register={register}
@@ -96,15 +115,21 @@ const Slabs = () => {
 
         <InputFieldItem
           item={{
-            labelName: "Percentage  ",
-            registerName: "percentage  ",
+            labelName: "Percentage",
+            registerName: "percentage",
             type: "number",
           }}
           register={register}
         ></InputFieldItem>
 
-        <SubmitBtn btnText={"Add"}></SubmitBtn>
+        {/* <SubmitBtn btnText={"Add"}></SubmitBtn> */}
+        <div className="w-full lg:w-3/4 flex justify-end">
+          <button className="btn btn-primary text-secondary my-3 w-[150px]">
+            Submit
+          </button>
+        </div>
       </form>
+      <Toaster position="top-center" reverseOrder={false} />
     </div>
   );
 };

@@ -3,33 +3,33 @@ import "./TableRow.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
 
-const TableRow = ({ item, rowNum, handleEditBtn, handleDeleteBtn }) => {
-  const { id, description, sequence } = item;
-
+const TableRow = ({
+  categoryItem,
+  rowNum,
+  handleEditBtn,
+  handleDeleteBtn,
+  slabItem,
+}) => {
   return (
     <tr>
-      <th>{rowNum}</th>
-      <td>
-        {/* <Link to={`/admin/categorySetup/${id}`} className="hover:underline">
-          {description}
-        </Link> */}
-        {description}
-      </td>
-      <td>{sequence}</td>
-      <td className="flex gap-2">
-        <button
-          className="btn btn-xs btn-outline btn-primary"
-          onClick={() => handleEditBtn(id)}
-        >
-          <FontAwesomeIcon icon={faPenToSquare} className="w-4 h-4" />
-        </button>
-        <button
-          className="btn btn-xs btn-outline btn-error"
-          onClick={() => handleDeleteBtn(id)}
-        >
-          <FontAwesomeIcon icon={faTrash} className="w-4 h-4" />
-        </button>
-      </td>
+      {categoryItem && (
+        <>
+          <td>{rowNum}</td>
+          <td className="hover:underline">
+            {/* <Link to={`/admin/categorySetup/${id}`} className="hover:underline">
+            {description}
+          </Link> */}
+            {categoryItem?.description}
+          </td>
+          <td>{categoryItem?.sequence}</td>
+        </>
+      )}
+      {slabItem && (
+        <>
+          <td>{rowNum}</td>
+          <td className="hover:underline">{slabItem?.select_one}</td>
+        </>
+      )}
     </tr>
   );
 };

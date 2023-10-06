@@ -1,7 +1,8 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import TableRow from "../../../components/TableRow/TableRow";
 
-const SlabsSetUp = () => {
+const SlabsSetUp = ({ slabList }) => {
   const navigate = useNavigate();
 
   const handleSlabsNewBtn = () => {
@@ -18,6 +19,23 @@ const SlabsSetUp = () => {
         >
           New
         </button>
+      </div>
+      <div className="overflow-x-auto bg-secondary my-5 p-2">
+        <table className="w-3/5 table table-zebra">
+          {/* head */}
+          <thead className="text-base">
+            <tr>
+              <th></th>
+              <th>Slabs</th>
+            </tr>
+          </thead>
+          <tbody>
+            {/* row */}
+            {slabList?.map((slabItem, i) => (
+              <TableRow key={i} slabItem={slabItem} rowNum={i + 1}></TableRow>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );

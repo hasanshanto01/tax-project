@@ -1,6 +1,7 @@
 import React from "react";
 
 const SubmitBtn = ({ btnText }) => {
+  console.log(btnText);
   return (
     <div className="w-full lg:w-3/4 flex justify-end">
       {btnText.toLowerCase() !== "delete" && (

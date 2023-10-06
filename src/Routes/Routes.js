@@ -40,8 +40,22 @@ export const routes = createBrowserRouter([
             element: <FolderPage></FolderPage>,
           },
           {
-            path: "/dashboard/form/:id",
+            path: "/dashboard/form/:category_name",
             element: <FormPage></FormPage>,
+            loader: ({ params }) => {
+              return fetch(
+                `http://127.0.0.1:8000/api/v1/category-setup-list/${params.category_name}/`,
+                {
+                  method: "GET",
+                  headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${localStorage.getItem(
+                      "accessToken"
+                    )}`,
+                  },
+                }
+              );
+            },
           },
           {
             path: "/dashboard/form2/:id",

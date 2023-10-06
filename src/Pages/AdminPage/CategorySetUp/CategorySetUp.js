@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import TableRow from "../../../components/TableRow/TableRow";
 import { useNavigate } from "react-router-dom";
 
-const CategorySetUp = () => {
+const CategorySetUp = ({ categorySetupList }) => {
   const navigate = useNavigate();
 
   const descriptionItems = [
@@ -34,16 +34,29 @@ const CategorySetUp = () => {
   ];
 
   const handleNewBtn = () => {
-    navigate("/categorySetup", { state: { btnType: "add" } });
+    // navigate("/categorySetup", { state: { btnType: "add" } });
+    navigate("/categorySetup");
   };
   const handleEditBtn = (id) => {
     console.log(id);
-    navigate("/categorySetup", { state: { btnType: "edit" } });
+    // navigate("/categorySetup", { state: { btnType: "edit" } });
+    navigate("/categorySetup");
   };
   const handleDeleteBtn = (id) => {
     console.log(id);
-    navigate("/categorySetup", { state: { btnType: "delete" } });
+    // navigate("/categorySetup", { state: { btnType: "delete" } });
+    navigate("/categorySetup");
   };
+
+  // useEffect(() => {
+  //   fetch()
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       console.log(data);
+  //     })
+  //     .catch((err) => console.log(err));
+  // }, []);
+  console.log(categorySetupList);
 
   return (
     <div className="">
@@ -69,13 +82,11 @@ const CategorySetUp = () => {
           </thead>
           <tbody>
             {/* row */}
-            {descriptionItems.map((item, i) => (
+            {categorySetupList?.map((categoryItem, i) => (
               <TableRow
                 key={i}
-                item={item}
+                categoryItem={categoryItem}
                 rowNum={i + 1}
-                handleEditBtn={handleEditBtn}
-                handleDeleteBtn={handleDeleteBtn}
               ></TableRow>
             ))}
           </tbody>

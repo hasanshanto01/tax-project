@@ -1,12 +1,126 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import CategorySetUp from "../CategorySetUp/CategorySetUp";
 import SlabsSetUp from "../SlabsSetup/SlabsSetUp";
+import QueryMenu from "../../../Shared/QueryMenu/QueryMenu";
+import LinkItem from "../../../components/LinkItem/LinkItem";
+import { NavLink } from "react-router-dom";
 
 const AdminPage = () => {
+  const activeClass =
+    "inline-block w-[150px] p-2 my-1 rounded-md font-semibold text-center  bg-primary text-secondary";
+  const inActiveClass =
+    "inline-block w-[150px] p-2 my-1 rounded-md font-semibold text-center border border-primary";
+
+  const [categorySetupList, setCategorySetupList] = useState([]);
+  // id, active, aggregated, category_name, description, required, sequence, tax_exempted
+
+  const [slabList, setSlabList] = useState([]);
+  // id, active, aggregated, category_name, description, required, sequence, tax_exempted
+
+  const menuList = [
+    {
+      id: 1,
+      title: "Salary Government",
+      path: "/dashboard/form/1",
+    },
+    {
+      id: 2,
+      title: "Salary Private",
+      path: "/dashboard/form/2",
+    },
+    {
+      id: 3,
+      title: "House Income",
+      path: "/dashboard/form2/3",
+    },
+    {
+      id: 4,
+      title: "Agriculture",
+      path: "/dashboard/form2/4",
+    },
+    {
+      id: 5,
+      title: "Business",
+      path: "/dashboard/businessForm",
+    },
+    {
+      id: 6,
+      title: "Expense",
+      path: "/dashboard/form/6",
+    },
+    {
+      id: 7,
+      title: "Rebate",
+      path: "/dashboard/form/7",
+    },
+  ];
+
+  const handleCategorySetupList = (categoryTitel) => {
+    // console.log(categoryTitel);
+    fetch(
+      `http://127.0.0.1:8000/api/v1/category-setup-list/${categoryTitel}/`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      }
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        // console.log(data);
+        setCategorySetupList(data);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  // const handleSlabs = (data) => {
+  //   console.log(data);
+  // };
+
+  useEffect(() => {
+    fetch(`http://127.0.0.1:8000/api/v1/slab-list/`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("slabs", data);
+        setSlabList(data);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
   return (
     <div className="w-full lg:w-[82%] mx-[14px] lg:mx-8 my-5">
-      <CategorySetUp></CategorySetUp>
-      <SlabsSetUp></SlabsSetUp>
+      {/* <ul className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 justify-items-center gap-[16px] my-5 overflow-x-auto text-sm">
+        {menuList.map((menu) => (
+          // <LinkItem
+          //   key={menu.id}
+          //   menu={menu}
+          //   handleCategorySetupList={handleCategorySetupList}
+          // ></LinkItem>
+          <li key={menu.id}>
+            <button
+              className={({ isActive }) =>
+                isActive ? activeClass : inActiveClass
+              }
+              onClick={() => handleCategorySetupList(menu.title)}
+            >
+              {menu.title}
+            </button>
+          </li>
+        ))}
+      </ul> */}
+
+      <QueryMenu handleCategorySetupList={handleCategorySetupList}></QueryMenu>
+
+      <CategorySetUp categorySetupList={categorySetupList}></CategorySetUp>
+      <SlabsSetUp slabList={slabList}></SlabsSetUp>
     </div>
   );
 };

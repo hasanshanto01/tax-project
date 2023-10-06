@@ -30,8 +30,9 @@ const InputFieldItem = ({ item, register }) => {
           type={type}
           defaultValue="0"
           min="0"
-          className="w-2/5 p-1 border border-primary rounded-sm focus:outline-none "
+          className="w-2/5 p-1 border border-primary rounded-sm focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
           {...register(`${registerName}`, {
+            valueAsNumber: true,
             required: requiredStatus,
           })}
         />
@@ -43,6 +44,7 @@ const InputFieldItem = ({ item, register }) => {
           min="0"
           className="w-2/5 p-1 border border-primary rounded-sm focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
           {...register(`${registerName}`, {
+            valueAsNumber: true,
             required: requiredStatus,
           })}
         />
