@@ -1,13 +1,41 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import logo from "../../Assets/logo.jpg";
+import toast, { Toaster } from "react-hot-toast";
+import { AuthContext } from "../../context/AuthProvider/AuthProvider";
 
 const LoginPage = () => {
+  // const { setAccessToken } = useContext(AuthContext);
+
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
+
   const { register, handleSubmit } = useForm();
 
-  const handleLoginForm = (data) => {
-    console.log(data);
+  const handleLoginForm = (loginData) => {
+    console.log(loginData);
+    fetch("http://127.0.0.1:8000/api/v1/signin/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(loginData),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("lr:", data);
+        const accessToken = data.access;
+        const refreshToken = data.refresh;
+        localStorage.setItem("accessToken", accessToken);
+        localStorage.setItem("refreshToken", refreshToken);
+        navigate(from, { replace: true });
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error(err.message);
+      });
   };
 
   return (
@@ -59,6 +87,8 @@ const LoginPage = () => {
           </p>
         </form>
       </div>
+
+      <Toaster position="top-center" reverseOrder={false} />
     </div>
   );
 };

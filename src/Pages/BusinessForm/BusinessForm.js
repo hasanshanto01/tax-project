@@ -53,7 +53,7 @@ const BusinessForm = () => {
           ></textarea>
         </div>
 
-        <div className="w-full lg:w-3/4 my-4 border border-primary">
+        <div className="w-full lg:w-3/4 my-4 p-2 border border-primary rounded-sm">
           <div className="w-full text-secondary font-bold flex items-center bg-primary">
             <label className="w-3/5 p-[6px]">Income Statement</label>
             <label className="w-2/5 p-[6px]">BDT</label>
@@ -108,7 +108,7 @@ const BusinessForm = () => {
             register={register}
           ></BusinessFormInput>
         </div>
-        <div className="border border-primary w-full lg:w-3/4 my-4">
+        <div className="w-full lg:w-3/4 my-4 p-2 border border-primary rounded-sm">
           <div className="w-full text-secondary font-bold flex items-center bg-primary">
             <label className="w-3/5 p-[6px]">Total Assets</label>
             <input
@@ -171,7 +171,7 @@ const BusinessForm = () => {
             register={register}
           ></BusinessFormInput>
         </div>
-        <div className="border border-primary w-full lg:w-3/4 my-4">
+        <div className="w-full lg:w-3/4 my-4 p-2 border border-primary rounded-sm">
           <div className="w-full text-secondary font-bold flex items-center bg-primary">
             <label className="w-3/5 p-[6px]">
               Total Equity and Liabilities
@@ -215,7 +215,7 @@ const BusinessForm = () => {
             register={register}
           ></BusinessFormInput>
         </div>
-        <div className="border border-primary w-full lg:w-3/4 my-4">
+        <div className="w-full lg:w-3/4 my-4 p-2 border border-primary rounded-sm">
           <div className="w-full text-secondary font-bold flex items-center bg-primary">
             <label className="w-3/5 p-[6px]">Liabilities</label>
             <input

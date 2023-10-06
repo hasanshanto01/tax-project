@@ -213,12 +213,15 @@ const SalarySchema = () => {
               <p className="font-bold">TIN:</p>
               <table className="border-collapse border border-slate-400 ...">
                 <thead>
-                  <th></th>
+                  <tr></tr>
                 </thead>
                 <tbody>
                   <tr>
                     {Array.from(tinNumber).map((element, i) => (
-                      <td className="border border-black w-6 text-center font-bold">
+                      <td
+                        className="border border-black w-6 text-center font-bold"
+                        key={i}
+                      >
                         {element}
                       </td>
                     ))}

@@ -4,20 +4,20 @@ import LinkItem from "../../components/LinkItem/LinkItem";
 const SideBar = () => {
   const menuList = [
     {
-      title: "Dashboard",
-      path: "/dashboard",
-    },
-    {
       title: "Personal info",
       path: "/personalInfo",
     },
     {
-      title: "Admin",
-      path: "/admin",
+      title: "Dashboard",
+      path: "/dashboard",
     },
     {
       title: "Report",
       path: "/report",
+    },
+    {
+      title: "Admin",
+      path: "/admin",
     },
   ];
 

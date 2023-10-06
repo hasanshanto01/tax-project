@@ -8,6 +8,8 @@ const RadioField = ({
 }) => {
   const { lableName, registerName, value } = item;
 
+  // console.log("lg:", typeof value);
+
   return (
     <div className="flex items-center">
       <input

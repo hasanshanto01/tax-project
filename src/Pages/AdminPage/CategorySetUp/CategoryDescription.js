@@ -13,7 +13,7 @@ const CategoryDescription = () => {
   const navigate = useNavigate();
 
   const { state } = useLocation();
-  const { btnType } = state;
+  const btnType = state;
   console.log(btnType);
   const { register, handleSubmit } = useForm();
 
@@ -146,7 +146,33 @@ const CategoryDescription = () => {
           register={register}
         ></InputFieldItem>
 
-        <SubmitBtn btnText={btnText}></SubmitBtn>
+        {/* <SubmitBtn btnText={btnText}></SubmitBtn> */}
+        {/* {btnType === "add" && (
+          <div className="w-full lg:w-3/4 flex justify-end">
+            <button className="btn btn-primary text-secondary my-3 w-[150px]">
+              Submit
+            </button>
+          </div>
+        )}
+        {btnType === "edit" && (
+          <div className="w-full lg:w-3/4 flex justify-end">
+            <button className="btn btn-primary text-secondary my-3 w-[150px]">
+              Edit
+            </button>
+          </div>
+        )}
+        {btnType === "delete" && (
+          <div className="w-full lg:w-3/4 flex justify-end">
+            <button className="btn btn-error text-secondary my-3 w-[150px]">
+              Delete
+            </button>
+          </div>
+        )} */}
+        <div className="w-full lg:w-3/4 flex justify-end">
+          <button className="btn btn-primary text-secondary my-3 w-[150px]">
+            Submit
+          </button>
+        </div>
       </form>
     </div>
   );

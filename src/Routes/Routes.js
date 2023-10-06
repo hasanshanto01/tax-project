@@ -15,11 +15,16 @@ import SignupPage from "../Pages/SignupPage/SignupPage";
 import PdfTest from "../Pages/PdfTest/PdfTest";
 import ReportPage from "../Pages/ReportPage/ReportPage";
 import SalarySchema from "../Pages/ReportSchema/SalarySchema";
+import PrivateRoute from "./PrivateRoute";
 
 export const routes = createBrowserRouter([
   {
     path: "/",
-    element: <Main></Main>,
+    element: (
+      <PrivateRoute>
+        <Main></Main>
+      </PrivateRoute>
+    ),
     errorElement: <ErrorPage></ErrorPage>,
     children: [
       {

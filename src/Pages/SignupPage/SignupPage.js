@@ -1,9 +1,15 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import logo from "../../Assets/logo.jpg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { AuthContext } from "../../context/AuthProvider/AuthProvider";
+import toast, { Toaster } from "react-hot-toast";
 
 const SignupPage = () => {
+  const { user, setUser, setIsUserVerified } = useContext(AuthContext);
+
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -13,45 +19,85 @@ const SignupPage = () => {
   const regExp = /^0[0-9].*$/; // for start with 0
   const passRegExp = /^.{8,}$/;
 
-  const handleSignupForm = (formData) => {
-    console.log(formData);
+  const handleSignupForm = (signupData) => {
+    // console.log(signupData);
+
     if (
-      formData.phone_number.length !== 11 ||
-      regExp.test(formData.phone_number) === false
+      signupData.phone_number.toString().length !== 11 ||
+      regExp.test(signupData.phone_number) === false
     ) {
-      return alert("Invalid phone number");
+      return toast.error("Invalid phone number");
     } else {
-      const phone = formData.phone_number.toString();
+      const phone = signupData.phone_number.toString();
       const updatedPhone = "+88" + phone;
-      formData.phone_number = updatedPhone;
+      signupData.phone_number = updatedPhone;
     }
-    if (passRegExp.test(formData.password) === false) {
-      return alert("Password must have at least 8 characters");
+
+    if (passRegExp.test(signupData.password) === false) {
+      return toast.error("Password must have at least 8 characters");
     }
-    console.log(formData);
-    // fetch("http://127.0.0.1:8000/api/v1/signup/", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify(formData),
-    // })
-    //   .then((res) => res.json())
-    //   .then((data) => {
-    //     console.log("res:", data);
-    //   });
+
+    console.log("form:", signupData);
+
     fetch("http://127.0.0.1:8000/api/v1/signup/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(formData),
+      body: JSON.stringify(signupData),
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        console.log("sr:", data);
+        setUser(data);
+        toast.success("User created successfully. Please, verify user.");
+        document.getElementById("otp_modal").showModal();
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error(err.message);
       });
   };
+
+  const handleOTP = (e) => {
+    e.preventDefault();
+
+    const otpToken = e.target.otpToken.value;
+    console.log(otpToken);
+
+    if (otpToken.toString().length > 5) {
+      toast.error("OTP must be 5 digit");
+    }
+
+    fetch(`http://127.0.0.1:8000/api/v1/verify-otp/${user.username}/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ otp_token: otpToken }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("after otp:", data);
+        if ((data.message = "Account activated successfully")) {
+          setIsUserVerified(true);
+          toast.success("Successfully verified user.");
+          navigate("/login");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error(err.message);
+      });
+  };
+
+  const handleModalClose = () => {
+    console.log("close");
+    toast("User not verified.");
+    navigate("/login");
+  };
+
+  const handleModal = () => document.getElementById("otp_modal").showModal();
 
   return (
     <div>
@@ -103,7 +149,9 @@ const SignupPage = () => {
               })}
             />
             {errors.password && (
-              <span>Password must have at least 8 characters</span>
+              <span className="text-red-500">
+                Password must have at least 8 characters
+              </span>
             )}
           </div>
 
@@ -121,6 +169,41 @@ const SignupPage = () => {
           </p>
         </form>
       </div>
+
+      <dialog id="otp_modal" className="modal">
+        <div className="modal-box bg-secondary">
+          <form method="dialog">
+            {/* if there is a button in form, it will close the modal */}
+            <button
+              className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+              onClick={handleModalClose}
+            >
+              ✕
+            </button>
+          </form>
+          <p className="py-4">
+            Please, check you email and enter <strong>OTP</strong> for
+            verification.
+          </p>
+          <form onSubmit={handleOTP} className="text-center">
+            <input
+              type="number"
+              name="otpToken"
+              className=" p-1 border border-primary rounded-sm focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+            />
+            <div className="my-2 flex justify-center gap-2">
+              <button className="btn btn-sm btn-error text-secondary">
+                Resend
+              </button>
+              <button className="btn btn-sm btn-primary text-secondary">
+                Verify
+              </button>
+            </div>
+          </form>
+        </div>
+      </dialog>
+
+      <Toaster position="top-center" reverseOrder={false} />
     </div>
   );
 };

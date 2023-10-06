@@ -12,7 +12,7 @@ const InputFieldItem = ({ item, register }) => {
         {requiredStatus && <span className="text-red-500">*</span>}
       </label>
 
-      {type === "text" && (
+      {type === "text" && type !== "number" && (
         <input
           type={type}
           placeholder="Type here"

@@ -3,6 +3,10 @@ import { useForm } from "react-hook-form";
 import InputFieldItem from "../../../components/InputFieldItem/InputFieldItem";
 import RadioField from "../../../components/RadioField/RadioField";
 import SubmitBtn from "../../../components/SubmitBtn/SubmitBtn";
+import TextInput from "../../../components/TextInput/TextInput";
+import NumberInput from "../../../components/NumberInput/NumberInput";
+import { type } from "@testing-library/user-event/dist/type";
+import toast, { Toaster } from "react-hot-toast";
 
 const PersonalInfo = () => {
   const [selectedCityOption, setSelectedCityOption] = useState(
@@ -11,7 +15,7 @@ const PersonalInfo = () => {
   const [selectedAreYouOption, setSelectedAreYouOption] = useState(
     "General – Individuals & Firms"
   );
-  const [selectedGaurdianOption, setSelectedGaurdianOption] = useState("No");
+  const [selectedGaurdianOption, setSelectedGaurdianOption] = useState("false");
 
   const { register, handleSubmit } = useForm();
 
@@ -29,17 +33,17 @@ const PersonalInfo = () => {
       value: "Any area other than City Corporation",
     },
     {
-      lableName: "Dhaka or Chattogram City Corporation",
+      lableName: "Dhaka or Chattagram City Corporation",
       registerName: "city",
-      value: "Dhaka or Chattogram City Corporation",
+      value: "Dhaka or Chattagram City Corporation",
     },
   ];
 
   const areYouItems = [
     {
-      lableName: "General – Individuals & Firms",
+      lableName: "General - Individuals & Firms",
       registerName: "are_you",
-      value: "General – Individuals & Firms",
+      value: "General - Individuals & Firms",
     },
     {
       lableName: "Women,and senior citizens (65+)",
@@ -67,12 +71,12 @@ const PersonalInfo = () => {
     {
       lableName: "Yes",
       registerName: "legal_guardian",
-      value: "Yes",
+      value: true,
     },
     {
       lableName: "No",
       registerName: "legal_guardian",
-      value: "No",
+      value: false,
     },
   ];
 
@@ -83,39 +87,69 @@ const PersonalInfo = () => {
     } else if (e.target.name === "are_you") {
       setSelectedAreYouOption(e.target.value);
     } else if (e.target.name === "legal_guardian") {
+      console.log(e.target.value);
       setSelectedGaurdianOption(e.target.value);
     }
   };
 
   const handlePersonalInfo = (data) => {
-    console.log(data);
+    console.log("s:", data);
     console.log(Object.keys(data).length);
+
+    data.nid = data.nid.toString();
     if (
-      data.phone_number.length !== 11 &&
+      data.phone_number.toString().length !== 11 &&
       regExp.test(data.phone_number) === false
     ) {
       alert("Invalid phone number");
     } else {
       const phone = data.phone_number.toString();
       const updatedPhone = "+88" + phone;
-      data.phone_number = parseInt(updatedPhone);
+      data.phone_number = updatedPhone;
     }
     if (data.tin.length !== 12) {
       alert("Invalid TIN number");
     }
+    data.tin = data.tin.toString();
+    data.circle = parseInt(data.circle);
+    // data.circle = parseInt(data.circle);
+    // console.log(typeof data.circle);\
+    // console.log(data.city);
 
+    // const updatedLegalGaurdian = Boolean(data.legal_gaurdian);
+    // data.legal_gaurdian = updatedLegalGaurdian;
+    // const stringValue = data.legal_gaurdian;
+    console.log(data.legal_guardian);
+    // const booleanValue = stringValue === "true" ? true : false;
+    // data.legal_gaurdian = booleanValue;
+    // console.log("legal_guardian", data.legal_guardian);
+    const updatedLegalGaurdian = Boolean(data.legal_guardian);
+    data.legal_guardian = updatedLegalGaurdian;
+    console.log("a", data.legal_guardian);
+
+    console.log("f:", data);
+    console.log(Object.keys(data).length);
+    // const accessToken = localStorage.getItem("accessToken");
+    // console.log(accessToken);
     fetch("http://127.0.0.1:8000/api/v1/personal-details/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk2NDk0ODk0LCJpYXQiOjE2OTY0MDg0OTQsImp0aSI6IjhiYjgzOGI0ZjA0MzRjNGY5ZTZkOGQxNmI5YjQ2Nzg4IiwidXNlcl9pZCI6MX0.1_dz4nNrCvhvaCBnJ2tktHW90rHFR-L2siE2Tu1saBE",
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
       },
       body: JSON.stringify(data),
     })
       .then((res) => res.json())
       .then((resData) => {
         console.log(resData);
+        toast.success("You information successfully submited.");
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error(err.message);
       });
   };
 
@@ -129,20 +163,21 @@ const PersonalInfo = () => {
         className="my-3 p-2 text-sm bg-secondary rounded-md border"
       >
         {/* date */}
-        <div className="w-full lg:w-3/4 my-2 flex items-center">
+        {/* ,{valueAsDate: true,}  */}
+        {/* <div className="w-full lg:w-3/4 my-2 flex items-center">
           <label className="w-3/5 p-[6px]">Date</label>
           <input
             type="date"
             defaultValue={new Date().toISOString().substring(0, 10)}
             className="w-2/5 p-1 border border-primary rounded-sm focus:outline-none"
-            {...register("current_date")} /* ,{valueAsDate: true,} */
+            {...register("current_date")}
             readOnly
           />
-        </div>
+        </div> */}
         {/* date */}
 
         {/* income year */}
-        <div className="w-full lg:w-3/4 my-2 flex items-center">
+        {/* <div className="w-full lg:w-3/4 my-2 flex items-center">
           <label className="w-3/5 p-[6px]">Income year ended on</label>
           <input
             type="text"
@@ -151,11 +186,11 @@ const PersonalInfo = () => {
             {...register("income_year")}
             readOnly
           />
-        </div>
+        </div> */}
         {/* income year */}
 
         {/* assessment year */}
-        <div className="w-full lg:w-3/4 my-2 flex items-cente">
+        {/* <div className="w-full lg:w-3/4 my-2 flex items-cente">
           <label className="w-3/5 p-[6px]">Assessment Year</label>
           <input
             type="text"
@@ -164,19 +199,18 @@ const PersonalInfo = () => {
             {...register("assessment_year")}
             readOnly
           />
-        </div>
+        </div> */}
         {/* assessment year */}
         <br />
         {/* assessee name */}
-        <InputFieldItem
+        <TextInput
           item={{
             labelName: "Name of the Assessee",
             registerName: "assess_name",
-            type: "text",
             requiredStatus: true,
           }}
           register={register}
-        ></InputFieldItem>
+        ></TextInput>
         {/* assessee name */}
 
         {/* address */}
@@ -196,20 +230,19 @@ const PersonalInfo = () => {
         {/* address */}
 
         {/* nid or passport */}
-        <InputFieldItem
+        <NumberInput
           item={{
             labelName: "NID/Passport Number (If no NID)",
             registerName: "nid",
-            type: "number",
             requiredStatus: true,
             defaultValueNone: true,
           }}
           register={register}
-        ></InputFieldItem>
+        ></NumberInput>
         {/* nid or passport */}
 
         {/* dob */}
-        <div className="w-full lg:w-3/4 my-2 flex items-center">
+        {/* <div className="w-full lg:w-3/4 my-2 flex items-center">
           <label className="w-3/5 p-[6px]">
             Date of birth
             <span className="text-red-500">*</span>
@@ -222,20 +255,19 @@ const PersonalInfo = () => {
               required: true,
             })}
           />
-        </div>
+        </div> */}
         {/* dob */}
 
         {/* mobile */}
-        <InputFieldItem
+        <NumberInput
           item={{
             labelName: "Phone Number",
             registerName: "phone_number",
-            type: "number",
             requiredStatus: true,
             defaultValueNone: true,
           }}
           register={register}
-        ></InputFieldItem>
+        ></NumberInput>
         {/* mobile */}
 
         {/* email */}
@@ -250,41 +282,38 @@ const PersonalInfo = () => {
         {/* email */}
 
         {/* tin */}
-        <InputFieldItem
+        <NumberInput
           item={{
             labelName: "TIN",
             registerName: "tin",
-            type: "number",
             requiredStatus: true,
             defaultValueNone: true,
           }}
           register={register}
-        ></InputFieldItem>
+        ></NumberInput>
         {/* tin */}
 
         {/* circle */}
-        <InputFieldItem
+        <NumberInput
           item={{
             labelName: "Circle",
             registerName: "circle",
-            type: "number",
             requiredStatus: true,
             defaultValueNone: true,
           }}
           register={register}
-        ></InputFieldItem>
+        ></NumberInput>
         {/* circle */}
 
         {/* tax zone */}
-        <InputFieldItem
+        <TextInput
           item={{
             labelName: "Tax Zone",
             registerName: "tax_zone",
-            type: "text",
             requiredStatus: true,
           }}
           register={register}
-        ></InputFieldItem>
+        ></TextInput>
         {/* tax zone */}
 
         {/* Resident field */}
@@ -294,12 +323,12 @@ const PersonalInfo = () => {
             <span className="text-red-500">*</span>
           </label>
           <select
-            defaultValue="resident"
+            defaultValue="Resident"
             className="w-2/5 p-1 border border-primary rounded-sm focus:outline-none"
             {...register("resident_status")}
           >
-            <option value="resident">Resident</option>
-            <option value="nonResident">Non-resident</option>
+            <option value="Resident">Resident</option>
+            <option value="Non-Resident">Non-resident</option>
           </select>
         </div>
         {/* Resident field */}
@@ -311,7 +340,7 @@ const PersonalInfo = () => {
             <span className="text-red-500">*</span>
           </label>
           <div className="w-2/5">
-            {cityItems.map((item, i) => (
+            {/* {cityItems.map((item, i) => (
               <RadioField
                 key={i}
                 item={item}
@@ -319,7 +348,54 @@ const PersonalInfo = () => {
                 selectedOption={selectedCityOption}
                 handleRadioOptionChange={handleRadioOptionChange}
               ></RadioField>
-            ))}
+            ))} */}
+            <div className="flex items-center">
+              <input
+                type="radio"
+                value="Any Other City Corporation"
+                className="radio-xs"
+                {...register(`city`, {
+                  required: true,
+                })}
+                checked={selectedCityOption === "Any Other City Corporation"}
+                onChange={handleRadioOptionChange}
+              />
+              <label className="p-1">Any Other City Corporation</label>
+            </div>
+            <div className="flex items-center">
+              <input
+                type="radio"
+                value="Any Area Other than City Corporation"
+                className="radio-xs"
+                {...register(`city`, {
+                  required: true,
+                })}
+                checked={
+                  selectedCityOption === "Any Area Other than City Corporation"
+                }
+                onChange={handleRadioOptionChange}
+              />
+              <label className="p-1">
+                Any Area Other than City Corporation
+              </label>
+            </div>
+            <div className="flex items-center">
+              <input
+                type="radio"
+                value="Dhaka or Chattagram City Corporation"
+                className="radio-xs"
+                {...register(`city`, {
+                  required: true,
+                })}
+                checked={
+                  selectedCityOption === "Dhaka or Chattagram City Corporation"
+                }
+                onChange={handleRadioOptionChange}
+              />
+              <label className="p-1">
+                Dhaka or Chattagram City Corporation
+              </label>
+            </div>
           </div>
         </div>
         {/* City Field */}
@@ -331,7 +407,7 @@ const PersonalInfo = () => {
             <span className="text-red-500">*</span>
           </label>
           <div className="w-2/5">
-            {areYouItems.map((item, i) => (
+            {/* {areYouItems.map((item, i) => (
               <RadioField
                 key={i}
                 item={item}
@@ -339,7 +415,85 @@ const PersonalInfo = () => {
                 selectedOption={selectedAreYouOption}
                 handleRadioOptionChange={handleRadioOptionChange}
               ></RadioField>
-            ))}
+            ))} */}
+            <div className="flex items-center">
+              <input
+                type="radio"
+                value="General - Individuals & Firms"
+                className="radio-xs"
+                {...register(`are_you`, {
+                  required: true,
+                })}
+                checked={
+                  selectedAreYouOption === "General - Individuals & Firms"
+                }
+                onChange={handleRadioOptionChange}
+              />
+              <label className="p-1">General - Individuals & Firms</label>
+            </div>
+
+            <div className="flex items-center">
+              <input
+                type="radio"
+                value="Woman and Senior Citizens (65+)"
+                className="radio-xs"
+                {...register(`are_you`, {
+                  required: true,
+                })}
+                checked={
+                  selectedAreYouOption === "Woman and Senior Citizens (65+)"
+                }
+                onChange={handleRadioOptionChange}
+              />
+              <label className="p-1">Woman and Senior Citizens (65+)</label>
+            </div>
+
+            <div className="flex items-center">
+              <input
+                type="radio"
+                value="Third Gender"
+                className="radio-xs"
+                {...register(`are_you`, {
+                  required: true,
+                })}
+                checked={selectedAreYouOption === "Third Gender"}
+                onChange={handleRadioOptionChange}
+              />
+              <label className="p-1">Third Gender</label>
+            </div>
+            <div className="flex items-center">
+              <input
+                type="radio"
+                value="Physically challenged persons"
+                className="radio-xs"
+                {...register(`are_you`, {
+                  required: true,
+                })}
+                checked={
+                  selectedAreYouOption === "Physically challenged persons"
+                }
+                onChange={handleRadioOptionChange}
+              />
+              <label className="p-1">Physically challenged persons</label>
+            </div>
+            <div className="flex items-center">
+              <input
+                type="radio"
+                value="War wounded gazetted freedom fighters"
+                className="radio-xs"
+                {...register(`are_you`, {
+                  required: true,
+                })}
+                checked={
+                  selectedAreYouOption ===
+                  "War wounded gazetted freedom fighters"
+                }
+                onChange={handleRadioOptionChange}
+              />
+              <label className="p-1">
+                War wounded gazetted freedom fighters
+              </label>
+            </div>
           </div>
         </div>
         {/* Are you field */}
@@ -351,7 +505,7 @@ const PersonalInfo = () => {
             <span className="text-red-500">*</span>
           </label>
           <div className="w-2/5">
-            {gaurdianItems.map((item, i) => (
+            {/* {gaurdianItems.map((item, i) => (
               <RadioField
                 key={i}
                 item={item}
@@ -359,13 +513,40 @@ const PersonalInfo = () => {
                 selectedOption={selectedGaurdianOption}
                 handleRadioOptionChange={handleRadioOptionChange}
               ></RadioField>
-            ))}
+            ))} */}
+            <div className="flex items-center">
+              <input
+                type="radio"
+                value="true"
+                className="radio-xs"
+                {...register("legal_guardian", {
+                  required: true,
+                })}
+                checked={selectedGaurdianOption === "true"}
+                onChange={handleRadioOptionChange}
+              />
+              <label className="p-1">True</label>
+            </div>
+            <div className="flex items-center">
+              <input
+                type="radio"
+                value="false"
+                className="radio-xs"
+                {...register("legal_guardian", {
+                  required: true,
+                })}
+                checked={selectedGaurdianOption === "false"}
+                onChange={handleRadioOptionChange}
+              />
+              <label className="p-1">False</label>
+            </div>
           </div>
         </div>
         {/* Guardian Field */}
         <br />
         <SubmitBtn btnText={"Submit"}></SubmitBtn>
       </form>
+      <Toaster position="top-center" reverseOrder={false} />
     </div>
   );
 };
