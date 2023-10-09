@@ -2,9 +2,14 @@ import React, { useRef } from "react";
 import { useReactToPrint } from "react-to-print";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDownload, faArrowLeftLong } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
 
 const SalarySchema = () => {
+  const salaryReportData = useLoaderData();
+  console.log("sr:", salaryReportData);
+
+  const { basic_info, government_details, private_details } = salaryReportData;
+
   const tableDatas = [
     {
       particulars: "Basic pay",
@@ -142,24 +147,25 @@ const SalarySchema = () => {
   const handleSum = (arr) => {
     let sum = 0;
     arr.forEach((element) => {
-      sum += element.income;
+      sum += parseFloat(element.amount);
     });
     return sum;
   };
 
   const filteredSum = (arr, taxExemptedValue) => {
     const filteredArray = arr.filter(
-      (element) => element.taxExempted === taxExemptedValue
+      (element) => element.tax_exempted === taxExemptedValue
     );
+    console.log(filteredArray);
     const sum = handleSum(filteredArray);
     return sum;
   };
 
-  const total = handleSum(tableDatas);
-  const taxExemptedIncome = filteredSum(tableDatas, true);
-  const taxableIncome = filteredSum(tableDatas, false);
+  const total = handleSum(government_details);
+  const taxExemptedIncome = filteredSum(government_details, true);
+  const taxableIncome = filteredSum(government_details, false);
 
-  const totalSalaryIncome = handleSum(table2Datas);
+  const totalSalaryIncome = handleSum(private_details);
   const exemptedSalary = Math.min(totalSalaryIncome / 3, 350000);
   const totalIncome = totalSalaryIncome - exemptedSalary;
   //   console.log(total);
@@ -193,7 +199,7 @@ const SalarySchema = () => {
         </button>
       </div>
       <div
-        className="w-full lg:w-[65%] lg:mx-auto my-3 lg:my-0 mb-6 p-3 text-sm"
+        className="w-full lg:w-[65%] lg:mx-auto my-3 lg:my-0 mb-6 p-3 text-sm border border-red-500"
         ref={componentRef}
       >
         <div>
@@ -245,27 +251,27 @@ const SalarySchema = () => {
                 </tr>
               </thead>
               <tbody>
-                {tableDatas.map((data, i) => (
-                  <tr key={i}>
+                {government_details?.map((data, i) => (
+                  <tr key={data.id}>
                     <td className="border border-black text-center">{i + 1}</td>
                     <td className="border border-black pl-2">
-                      {data.particulars}
+                      {data.description}
                     </td>
                     <td className="border border-black text-right w-16 lg:w-32 pr-2">
-                      {data.income}
+                      {data.amount}
                     </td>
-                    {data.taxExempted ? (
+                    {data.tax_exempted ? (
                       <td className="border border-black text-right w-16 lg:w-32 pr-2">
-                        {data.income}
+                        {data.amount}
                       </td>
                     ) : (
                       <td className="border border-black text-center font-semibold w-16 lg:w-32">
                         -
                       </td>
                     )}
-                    {!data.taxExempted ? (
+                    {!data.tax_exempted ? (
                       <td className="border border-black text-right w-16 lg:w-32 pr-2">
-                        {data.income}
+                        {data.amount}
                       </td>
                     ) : (
                       <td className="border border-black text-center font-semibold w-16 lg:w-32">
@@ -276,7 +282,7 @@ const SalarySchema = () => {
                 ))}
                 <tr className="font-bold">
                   <td className="border border-black text-center">
-                    {tableDatas.length + 1}
+                    {government_details.length + 1}
                   </td>
                   <td className="border border-black pl-2">Total</td>
                   <td className="border border-black text-right w-16 lg:w-32 pr-2">
@@ -311,14 +317,14 @@ const SalarySchema = () => {
                 </tr>
               </thead>
               <tbody>
-                {table2Datas.map((data, i) => (
-                  <tr key={i}>
+                {private_details.map((data, i) => (
+                  <tr key={data.id}>
                     <td className="border border-black text-center">{i + 1}</td>
                     <td className="border border-black pl-2">
-                      {data.particulars}
+                      {data.description}
                     </td>
                     <td className="border border-black text-right w-16 lg:w-32 pr-2">
-                      {data.income}
+                      {data.amount}
                     </td>
                     {i[0] === 0 && (
                       <td className="border border-black text-right w-16 lg:w-32 pr-2"></td>
@@ -327,7 +333,7 @@ const SalarySchema = () => {
                 ))}
                 <tr>
                   <td className="border border-black text-center">
-                    {table2Datas.length + 1}
+                    {private_details.length + 1}
                   </td>
                   <td className="border border-black pl-2">
                     Total salary income (aggregate of 1 to 12){" "}
@@ -339,7 +345,7 @@ const SalarySchema = () => {
                 </tr>
                 <tr>
                   <td className="border border-black text-center">
-                    {table2Datas.length + 2}
+                    {private_details.length + 2}
                   </td>
                   <td className="border border-black pl-2">
                     Exempted Salary (As per 6th schedule Part 1)
@@ -350,7 +356,7 @@ const SalarySchema = () => {
                 </tr>
                 <tr className="font-bold">
                   <td className="border border-black text-center">
-                    {table2Datas.length + 3}
+                    {private_details.length + 3}
                   </td>
                   <td className="border border-black pl-2">
                     Total Income from Salary (13-14)

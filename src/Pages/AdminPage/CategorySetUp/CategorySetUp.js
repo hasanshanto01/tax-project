@@ -34,16 +34,16 @@ const CategorySetUp = ({ categorySetupList }) => {
   ];
 
   const handleNewBtn = () => {
-    // navigate("/categorySetup", { state: { btnType: "add" } });
+    navigate("/categorySetup", { state: { btnType: "add" } });
     navigate("/categorySetup");
   };
   const handleEditBtn = (id) => {
-    console.log(id);
+    // console.log(id);
     // navigate("/categorySetup", { state: { btnType: "edit" } });
     navigate("/categorySetup");
   };
   const handleDeleteBtn = (id) => {
-    console.log(id);
+    // console.log(id);
     // navigate("/categorySetup", { state: { btnType: "delete" } });
     navigate("/categorySetup");
   };
@@ -56,7 +56,11 @@ const CategorySetUp = ({ categorySetupList }) => {
   //     })
   //     .catch((err) => console.log(err));
   // }, []);
-  console.log(categorySetupList);
+  // console.log(categorySetupList);
+
+  // const handleCategorySetupModify = (category_name, category_description) => {
+  //   console.log(category_name, category_description);
+  // };
 
   return (
     <div className="">
@@ -82,13 +86,15 @@ const CategorySetUp = ({ categorySetupList }) => {
           </thead>
           <tbody>
             {/* row */}
-            {categorySetupList?.map((categoryItem, i) => (
-              <TableRow
-                key={i}
-                categoryItem={categoryItem}
-                rowNum={i + 1}
-              ></TableRow>
-            ))}
+            {categorySetupList &&
+              categorySetupList?.map((categoryItem, i) => (
+                <TableRow
+                  key={i}
+                  categoryItem={categoryItem}
+                  rowNum={i + 1}
+                  // handleCategorySetupModify={handleCategorySetupModify}
+                ></TableRow>
+              ))}
           </tbody>
         </table>
       </div>

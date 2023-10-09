@@ -3,15 +3,38 @@ import { useForm } from "react-hook-form";
 import InputFieldItem from "../../components/InputFieldItem/InputFieldItem";
 import SubmitBtn from "../../components/SubmitBtn/SubmitBtn";
 import BusinessFormInput from "../../components/BusinessFormInput/BusinessFormInput";
+import TextInput from "../../components/TextInput/TextInput";
+import FormNumberInput from "../../components/FormNumberInput/FormNumberInput";
 
 const BusinessForm = () => {
-  const [businessFormDetails, setBusinessFormDetails] = useState([]);
-  // let businessFormDetails = [];
+  const [costOfSales, SetCostOfSales] = useState(0);
+  const [grossProfit, SetGrossProfit] = useState(0);
+  const [administrativeExpenses, SetAdministrativeExpenses] = useState(0);
 
   const { register, handleSubmit } = useForm();
 
   const handleBusinessInfo = (data) => {
-    console.log(data);
+    // console.log(data);
+  };
+
+  const handleOnchange = (e) => {
+    console.log(e.target.name, e.target.value);
+    const fieldName = e.target.name;
+    const value = e.target.value;
+    if (fieldName === "revenue") {
+      const costOfSalesValue = value * 0.85;
+      const grossProfitValue = value - costOfSales;
+      const administrativeExpensesValue = value * 0.05;
+      console.log(
+        "bf:",
+        costOfSalesValue,
+        grossProfitValue,
+        administrativeExpensesValue
+      );
+      SetCostOfSales(costOfSalesValue);
+      SetGrossProfit(grossProfitValue);
+      SetAdministrativeExpenses(administrativeExpensesValue);
+    }
   };
 
   return (
@@ -25,7 +48,7 @@ const BusinessForm = () => {
         onSubmit={handleSubmit(handleBusinessInfo)}
         className="my-3 p-2 text-sm bg-gray-50"
       >
-        <InputFieldItem
+        <TextInput
           item={{
             labelName: "Name of business",
             registerName: "businessName",
@@ -33,16 +56,16 @@ const BusinessForm = () => {
             requiredStatus: true,
           }}
           register={register}
-        ></InputFieldItem>
+        ></TextInput>
 
-        <InputFieldItem
+        <TextInput
           item={{
             labelName: "Type of main business or profession",
             registerName: "businessType",
             type: "text",
           }}
           register={register}
-        ></InputFieldItem>
+        ></TextInput>
 
         <div className="w-full lg:w-3/4 my-2 flex items-center">
           <label className="w-3/5 p-[6px]">Buseness Address</label>
@@ -65,7 +88,9 @@ const BusinessForm = () => {
               registerName: "revenue",
               type: "number",
             }}
+            defaultValue={0}
             register={register}
+            handleOnchange={handleOnchange}
           ></BusinessFormInput>
           <BusinessFormInput
             item={{
@@ -73,6 +98,7 @@ const BusinessForm = () => {
               registerName: "costOfSales",
               type: "number",
             }}
+            defaultValue={costOfSales}
             register={register}
           ></BusinessFormInput>
           <BusinessFormInput
@@ -81,6 +107,7 @@ const BusinessForm = () => {
               registerName: "grossProfit",
               type: "number",
             }}
+            defaultValue={grossProfit}
             register={register}
           ></BusinessFormInput>
           <BusinessFormInput
@@ -89,6 +116,7 @@ const BusinessForm = () => {
               registerName: "administrativeExpenses",
               type: "number",
             }}
+            defaultValue={administrativeExpenses}
             register={register}
           ></BusinessFormInput>
           <BusinessFormInput

@@ -16,6 +16,7 @@ import PdfTest from "../Pages/PdfTest/PdfTest";
 import ReportPage from "../Pages/ReportPage/ReportPage";
 import SalarySchema from "../Pages/ReportSchema/SalarySchema";
 import PrivateRoute from "./PrivateRoute";
+import ReturnSchema from "../Pages/ReportSchema/ReturnSchema";
 
 export const routes = createBrowserRouter([
   {
@@ -80,6 +81,22 @@ export const routes = createBrowserRouter([
         element: <CategoryDescription></CategoryDescription>,
       },
       {
+        path: "/categorySetup/:category_name/:description",
+        element: <CategoryDescription></CategoryDescription>,
+        loader: ({ params }) => {
+          return fetch(
+            `http://127.0.0.1:8000/api/v1/category-retrieve/${params.category_name}/${params.description}`,
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+              },
+            }
+          );
+        },
+      },
+      {
         path: "/slabs",
         element: <Slabs></Slabs>,
       },
@@ -90,6 +107,19 @@ export const routes = createBrowserRouter([
       {
         path: "/report/salarySchema",
         element: <SalarySchema></SalarySchema>,
+        loader: () => {
+          return fetch(`http://127.0.0.1:8000/api/v1/salary-report/`, {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            },
+          });
+        },
+      },
+      {
+        path: "/report/returnSchema",
+        element: <ReturnSchema></ReturnSchema>,
       },
     ],
   },

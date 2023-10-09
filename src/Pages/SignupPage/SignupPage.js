@@ -37,7 +37,7 @@ const SignupPage = () => {
       return toast.error("Password must have at least 8 characters");
     }
 
-    console.log("form:", signupData);
+    // console.log("form:", signupData);
 
     fetch("http://127.0.0.1:8000/api/v1/signup/", {
       method: "POST",
@@ -48,7 +48,7 @@ const SignupPage = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log("sr:", data);
+        // console.log("sr:", data);
         setUser(data);
         toast.success("User created successfully. Please, verify user.");
         document.getElementById("otp_modal").showModal();
@@ -63,7 +63,7 @@ const SignupPage = () => {
     e.preventDefault();
 
     const otpToken = e.target.otpToken.value;
-    console.log(otpToken);
+    // console.log(otpToken);
 
     if (otpToken.toString().length > 5) {
       toast.error("OTP must be 5 digit");
@@ -78,7 +78,7 @@ const SignupPage = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log("after otp:", data);
+        // console.log("after otp:", data);
         if ((data.message = "Account activated successfully")) {
           setIsUserVerified(true);
           toast.success("Successfully verified user.");
@@ -92,7 +92,7 @@ const SignupPage = () => {
   };
 
   const handleModalClose = () => {
-    console.log("close");
+    // console.log("close");
     toast("User not verified.");
     navigate("/login");
   };

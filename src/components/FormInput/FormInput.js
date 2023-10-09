@@ -12,7 +12,7 @@ const FormInput = ({ item, register }) => {
         type="number"
         defaultValue="0"
         min="0"
-        className="w-2/5 p-1 border border-primary rounded-sm focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+        className="w-2/5 p-1 border border-primary rounded-sm focus:outline-none"
         {...register(`${description}`, {
           valueAsNumber: true,
         })}

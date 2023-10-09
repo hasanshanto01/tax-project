@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import InputFieldItem from "../../../components/InputFieldItem/InputFieldItem";
 import CheckBoxField from "../../../components/CheckBoxField/CheckBoxField";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLoaderData, useLocation, useNavigate } from "react-router-dom";
 import SubmitBtn from "../../../components/SubmitBtn/SubmitBtn";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeftLong } from "@fortawesome/free-solid-svg-icons";
@@ -11,6 +11,8 @@ import toast, { Toaster } from "react-hot-toast";
 
 const CategoryDescription = () => {
   // const [btnText, setBtnText] = useState("");
+  const categoryItem = useLoaderData();
+  // console.log(categoryItem.active);
 
   const navigate = useNavigate();
 
@@ -72,7 +74,7 @@ const CategoryDescription = () => {
   // }, [btnType]);
 
   const handleDescriptionDetails = (data) => {
-    console.log("ctd", data);
+    // console.log("ctd", data);
     // const updatedSequence = Number(data.sequence);
     // data.sequence = +data.sequence;
     // if (data.sequence == NaN) {
@@ -85,7 +87,7 @@ const CategoryDescription = () => {
     //   data.required = false;
     // }
 
-    console.log("ctdF", data);
+    // console.log("ctdF", data);
 
     fetch("http://127.0.0.1:8000/api/v1/category-setup-create/", {
       method: "POST",
@@ -98,10 +100,13 @@ const CategoryDescription = () => {
       .then((res) => res.json())
       .then((resData) => {
         console.log("res:", resData);
-        toast.success("Category Setup created successfully");
+        if (resData) {
+          toast.success("Category Setup created successfully");
+        }
       })
       .catch((err) => {
         console.log(err);
+        toast.err(err.message);
       });
   };
 
@@ -137,20 +142,39 @@ const CategoryDescription = () => {
 
         <div className="w-full lg:w-3/4 my-2 flex items-center">
           <label className="w-3/5 p-[6px]">Description</label>
-          <textarea
-            className="w-2/5 p-1 border border-primary rounded-sm focus:outline-none"
-            placeholder="Type here"
-            {...register("description")}
-          ></textarea>
+          {categoryItem ? (
+            <textarea
+              className="w-2/5 p-1 border border-primary rounded-sm focus:outline-none"
+              defaultValue={categoryItem.description}
+              {...register("description")}
+            ></textarea>
+          ) : (
+            <textarea
+              className="w-2/5 p-1 border border-primary rounded-sm focus:outline-none"
+              placeholder="Type here"
+              {...register("description")}
+            ></textarea>
+          )}
         </div>
 
-        <CheckBoxField
-          item={{
-            labelName: "Tax Exempted",
-            registerName: "tax_exempted",
-          }}
-          register={register}
-        ></CheckBoxField>
+        {categoryItem ? (
+          <CheckBoxField
+            item={{
+              labelName: "Tax Exempted",
+              registerName: "tax_exempted",
+            }}
+            register={register}
+            checkStatus={categoryItem.active}
+          ></CheckBoxField>
+        ) : (
+          <CheckBoxField
+            item={{
+              labelName: "Tax Exempted",
+              registerName: "tax_exempted",
+            }}
+            register={register}
+          ></CheckBoxField>
+        )}
 
         <InputFieldItem
           item={{
@@ -208,11 +232,22 @@ const CategoryDescription = () => {
             </button>
           </div>
         )} */}
-        <div className="w-full lg:w-3/4 flex justify-end">
-          <button className="btn btn-primary text-secondary my-3 w-[150px]">
-            Submit
-          </button>
-        </div>
+        {categoryItem ? (
+          <div className="w-full lg:w-3/4 flex justify-end gap-3">
+            <button className="btn btn-primary text-secondary my-3 w-[150px]">
+              Update
+            </button>
+            <button className="btn btn-error text-secondary my-3 w-[150px]">
+              Delete
+            </button>
+          </div>
+        ) : (
+          <div className="w-full lg:w-3/4 flex justify-end">
+            <button className="btn btn-primary text-secondary my-3 w-[150px]">
+              Submit
+            </button>
+          </div>
+        )}
       </form>
       <Toaster position="top-center" reverseOrder={false} />
     </div>

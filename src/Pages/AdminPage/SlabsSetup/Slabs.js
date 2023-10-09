@@ -46,7 +46,7 @@ const Slabs = () => {
   ];
 
   const handleSlabs = (data) => {
-    console.log(data);
+    // console.log(data);
     data.percentage = parseFloat(data.percentage);
 
     fetch("http://127.0.0.1:8000/api/v1/slab-create/", {
@@ -59,7 +59,7 @@ const Slabs = () => {
     })
       .then((res) => res.json())
       .then((resData) => {
-        console.log("res:", resData);
+        // console.log("res:", resData);
         toast.success("Slab created successfully");
       })
       .catch((err) => {

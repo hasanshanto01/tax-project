@@ -15,7 +15,7 @@ const LoginPage = () => {
   const { register, handleSubmit } = useForm();
 
   const handleLoginForm = (loginData) => {
-    console.log(loginData);
+    // console.log(loginData);
     fetch("http://127.0.0.1:8000/api/v1/signin/", {
       method: "POST",
       headers: {
@@ -25,7 +25,7 @@ const LoginPage = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log("lr:", data);
+        // console.log("lr:", data);
         const accessToken = data.access;
         const refreshToken = data.refresh;
         localStorage.setItem("accessToken", accessToken);

@@ -1,7 +1,7 @@
 import React from "react";
 
 const TextInput = ({ item, register }) => {
-  const { labelName, registerName, requiredStatus, defaultValueNone } = item;
+  const { labelName, registerName, requiredStatus } = item;
 
   return (
     <div className="w-full lg:w-3/4 my-2 flex items-center">

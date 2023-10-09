@@ -8,7 +8,7 @@ const LinkItem = ({ menu, handleCategorySetupList }) => {
     "inline-block w-[150px] p-2 my-1 rounded-md font-semibold text-center border border-primary";
 
   const { title, path } = menu;
-  console.log(menu);
+  // console.log(menu);
 
   return (
     <>

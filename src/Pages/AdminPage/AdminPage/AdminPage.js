@@ -55,21 +55,18 @@ const AdminPage = () => {
     },
   ];
 
-  const handleCategorySetupList = (categoryTitel) => {
-    // console.log(categoryTitel);
-    fetch(
-      `http://127.0.0.1:8000/api/v1/category-setup-list/${categoryTitel}/`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        },
-      }
-    )
+  const handleCategorySetupList = (categoryName) => {
+    console.log(categoryName);
+    fetch(`http://127.0.0.1:8000/api/v1/category-setup-list/${categoryName}/`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
+    })
       .then((res) => res.json())
       .then((data) => {
-        // console.log(data);
+        console.log(data);
         setCategorySetupList(data);
       })
       .catch((err) => console.log(err));
@@ -89,7 +86,7 @@ const AdminPage = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log("slabs", data);
+        // console.log("slabs", data);
         setSlabList(data);
       })
       .catch((err) => console.log(err));

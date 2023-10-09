@@ -87,14 +87,14 @@ const PersonalInfo = () => {
     } else if (e.target.name === "are_you") {
       setSelectedAreYouOption(e.target.value);
     } else if (e.target.name === "legal_guardian") {
-      console.log(e.target.value);
+      // console.log(e.target.value);
       setSelectedGaurdianOption(e.target.value);
     }
   };
 
   const handlePersonalInfo = (data) => {
     console.log("s:", data);
-    console.log(Object.keys(data).length);
+    // console.log(Object.keys(data).length);
 
     data.nid = data.nid.toString();
     if (
@@ -119,16 +119,16 @@ const PersonalInfo = () => {
     // const updatedLegalGaurdian = Boolean(data.legal_gaurdian);
     // data.legal_gaurdian = updatedLegalGaurdian;
     // const stringValue = data.legal_gaurdian;
-    console.log(data.legal_guardian);
+    // console.log(data.legal_guardian);
     // const booleanValue = stringValue === "true" ? true : false;
     // data.legal_gaurdian = booleanValue;
     // console.log("legal_guardian", data.legal_guardian);
     const updatedLegalGaurdian = Boolean(data.legal_guardian);
     data.legal_guardian = updatedLegalGaurdian;
-    console.log("a", data.legal_guardian);
+    // console.log("a", data.legal_guardian);
 
     console.log("f:", data);
-    console.log(Object.keys(data).length);
+    // console.log(Object.keys(data).length);
     // const accessToken = localStorage.getItem("accessToken");
     // console.log(accessToken);
     fetch("http://127.0.0.1:8000/api/v1/personal-details/", {
@@ -141,11 +141,8 @@ const PersonalInfo = () => {
     })
       .then((res) => res.json())
       .then((resData) => {
-        console.log(resData);
+        // console.log(resData);
         toast.success("You information successfully submited.");
-      })
-      .catch((err) => {
-        console.log(err);
       })
       .catch((err) => {
         console.log(err);
