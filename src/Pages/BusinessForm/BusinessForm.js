@@ -1,41 +1,406 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import InputFieldItem from "../../components/InputFieldItem/InputFieldItem";
 import SubmitBtn from "../../components/SubmitBtn/SubmitBtn";
 import BusinessFormInput from "../../components/BusinessFormInput/BusinessFormInput";
 import TextInput from "../../components/TextInput/TextInput";
-import FormNumberInput from "../../components/FormNumberInput/FormNumberInput";
+import toast, { Toaster } from "react-hot-toast";
 
 const BusinessForm = () => {
-  const [costOfSales, SetCostOfSales] = useState(0);
-  const [grossProfit, SetGrossProfit] = useState(0);
-  const [administrativeExpenses, SetAdministrativeExpenses] = useState(0);
+  // const [revenue, setRevenue] = useState(0);
+  // const [costOfSales, setCostOfSales] = useState(0);
+  // // const [grossProfit, setGrossProfit] = useState(revenue - costOfSales);
+  // const [grossProfit, setGrossProfit] = useState(0);
+  // const [administrativeExpenses, setAdministrativeExpenses] = useState(0);
+  // const [badDebtExpense, setBadDebtExpense] = useState(0);
+  // const [netProfit, setNetProfit] = useState(0);
 
-  const { register, handleSubmit } = useForm();
+  // const [propertyPlantEquipment, setPropertyPlantEquipment] = useState(0);
+  // const [loanToOthers, setLoanToOthers] = useState(0);
+  // const [advancesDepositsReceivable, setAdvancesDepositsReceivable] =
+  //   useState(0);
+  // const [closingBalanceInventory, setClosingBalanceInventory] = useState(0);
+  // const [bankBalance, setBankBalance] = useState(0);
+  // const [cashInHand, setCashInHand] = useState(0);
+  // const [totalAssets, setTotalAssets] = useState(0);
 
-  const handleBusinessInfo = (data) => {
-    // console.log(data);
-  };
+  // const [openingBalanceCapital, setOpeningBalanceCapital] = useState(0);
+  // const [drawingDuringTheIncomeYear, setDrawingDuringTheIncomeYear] =
+  //   useState(0);
+  // const [totalEquity, setTotalEquity] = useState(0);
+
+  // const [longTermLoan, setLongTermLoan] = useState(0);
+  // const [shortTermBorrowings, setShortTermBorrowings] = useState(0);
+  // const [liabilityForOther, setLiabilityForOther] = useState(0);
+  // const [liabilities, setLiabilities] = useState(0);
+
+  // const [totalEquityLiabilities, setTotalEquityLiabilities] = useState(0);
+  // const [differences, setDifferences] = useState(0);
+
+  // // const [formKey, setFormKey] = useState(0);
+
+  // // console.log(typeof totalAssets);
+
+  const [dependOnFields, setDependOnFields] = useState({
+    revenue: 0,
+    cost_of_sales: 0,
+    administrative_expenses: 0,
+    bad_debt_expense: 0,
+    property_plant_equipment: 0,
+    loan_to_others: 0,
+    advances_deposits_receivable: 0,
+    closing_balance_inventory: 0,
+    bank_balance: 0,
+    cash_in_hand: 0,
+    opening_balance_capital: 0,
+    drawing_during_the_income_year: 0,
+    long_term_loan: 0,
+    short_term_borrowings: 0,
+    liability_for_other: 0,
+  });
+
+  const [dependantFields, setDependantFields] = useState({
+    gross_profit: 0,
+    net_profit: 0,
+    total_assets: 0,
+    total_equity: 0,
+    liabilities: 0,
+    total_equity_liabilities: 0,
+    differences: 0,
+  });
+
+  const {
+    revenue,
+    cost_of_sales,
+    administrative_expenses,
+    bad_debt_expense,
+    property_plant_equipment,
+    loan_to_others,
+    advances_deposits_receivable,
+    closing_balance_inventory,
+    bank_balance,
+    cash_in_hand,
+    opening_balance_capital,
+    drawing_during_the_income_year,
+    long_term_loan,
+    short_term_borrowings,
+    liability_for_other,
+  } = dependOnFields;
+
+  const {
+    gross_profit,
+    net_profit,
+    total_assets,
+    total_equity,
+    liabilities,
+    total_equity_liabilities,
+    differences,
+  } = dependantFields;
+
+  const { register, handleSubmit, setValue } = useForm();
+
+  // useEffect(() => {
+  //   setGrossProfit(revenue - costOfSales);
+  //   setValue("gross_profit", grossProfit);
+  //   setNetProfit(grossProfit - administrativeExpenses - badDebtExpense);
+  //   setValue("net_profit", netProfit);
+  //   setTotalAssets(
+  //     propertyPlantEquipment +
+  //       loanToOthers +
+  //       advancesDepositsReceivable +
+  //       closingBalanceInventory +
+  //       bankBalance +
+  //       cashInHand
+  //   );
+  //   setValue("total_assets", totalAssets);
+  //   setTotalEquity(
+  //     openingBalanceCapital - drawingDuringTheIncomeYear + netProfit
+  //   );
+  //   setValue("total_equity", totalEquity);
+  //   setLiabilities(longTermLoan + shortTermBorrowings + liabilityForOther);
+  //   setValue("liabilities", liabilities);
+  //   setTotalEquityLiabilities(totalEquity + liabilities);
+  //   setValue("total_equity_liabilities", liabilities);
+  //   setDifferences(totalEquityLiabilities - totalAssets);
+  //   setValue("differences", differences);
+  // }, [
+  //   revenue,
+  //   grossProfit,
+  //   netProfit,
+  //   totalAssets,
+  //   totalEquity,
+  //   liabilities,
+  //   totalEquityLiabilities,
+  //   differences,
+  // ]);
 
   const handleOnchange = (e) => {
-    console.log(e.target.name, e.target.value);
+    console.log(e.target.name, typeof e.target.value);
     const fieldName = e.target.name;
+    // const value = parseInt(e.target.value);
     const value = e.target.value;
-    if (fieldName === "revenue") {
-      const costOfSalesValue = value * 0.85;
-      const grossProfitValue = value - costOfSales;
-      const administrativeExpensesValue = value * 0.05;
-      console.log(
-        "bf:",
-        costOfSalesValue,
-        grossProfitValue,
-        administrativeExpensesValue
-      );
-      SetCostOfSales(costOfSalesValue);
-      SetGrossProfit(grossProfitValue);
-      SetAdministrativeExpenses(administrativeExpensesValue);
-    }
+
+    setDependOnFields({
+      ...dependOnFields,
+      fieldName: parseInt(value),
+    });
+
+    // if (fieldName === "revenue") {
+    //   // console.log(typeof value);
+    //   const costOfSalesValue = value * 0.85;
+    //   const grossProfitValue = value - costOfSalesValue;
+    //   const administrativeExpensesValue = value * 0.05;
+    //   // console.log(
+    //   //   "bf:",
+    //   //   costOfSalesValue,
+    //   //   grossProfitValue,
+    //   //   administrativeExpensesValue
+    //   // );
+    //   setCostOfSales(costOfSalesValue);
+    //   setGrossProfit(grossProfitValue);
+    //   setAdministrativeExpenses(administrativeExpensesValue);
+    // } else if (fieldName === "badDebtExpense") {
+    //   const netProfitValue = grossProfit - administrativeExpenses - value;
+    //   setNetProfit(netProfitValue);
+    // }
+
+    // Obj.fieldName = value;
+
+    // if (fieldName === "revenue") {
+    //   if (value === "") {
+    //     setRevenue(0);
+    //   } else {
+    //     setRevenue(parseInt(value));
+    //   }
+    // } else if (fieldName === "cost_of_sales") {
+    //   if (value === "") {
+    //     setCostOfSales(0);
+    //   } else {
+    //     setCostOfSales(parseInt(value));
+    //   }
+    // } else if (fieldName === "administrative_expenses") {
+    //   if (value === "") {
+    //     setAdministrativeExpenses(0);
+    //   } else {
+    //     setAdministrativeExpenses(parseInt(value));
+    //   }
+    // } else if (fieldName === "bad_debt_expense") {
+    //   if (value === "") {
+    //     setBadDebtExpense(0);
+    //   } else {
+    //     setBadDebtExpense(parseInt(value));
+    //   }
+    // }
+
+    // if (fieldName === "property_plant_equipment") {
+    //   if (value === "") {
+    //     setPropertyPlantEquipment(0);
+    //   } else {
+    //     setPropertyPlantEquipment(parseInt(value));
+    //   }
+    // } else if (fieldName === "loan_to_others") {
+    //   if (value === "") {
+    //     setLoanToOthers(0);
+    //   } else {
+    //     setLoanToOthers(parseInt(value));
+    //   }
+    // } else if (fieldName === "advances_deposits_receivable") {
+    //   if (value === "") {
+    //     setAdvancesDepositsReceivable(0);
+    //   } else {
+    //     setAdvancesDepositsReceivable(parseInt(value));
+    //   }
+    // } else if (fieldName === "closing_balance_inventory") {
+    //   if (value === "") {
+    //     setClosingBalanceInventory(0);
+    //   } else {
+    //     setClosingBalanceInventory(parseInt(value));
+    //   }
+    // } else if (fieldName === "bank_balance") {
+    //   if (value === "") {
+    //     setBankBalance(0);
+    //   } else {
+    //     setBankBalance(parseInt(value));
+    //   }
+    // } else if (fieldName === "cash_in_hand") {
+    //   if (value === "") {
+    //     setCashInHand(0);
+    //   } else {
+    //     setCashInHand(parseInt(value));
+    //   }
+    // }
+
+    // if (fieldName === "propertyPlant&Equipment") {
+    //   console.log(typeof value);
+    //   if (value === "") {
+    //     console.log("nan");
+    //   } else {
+    //     setPropertyPlantEquipment(value);
+    //     const totalAssetsValue = value;
+    //     setTotalAssets(totalAssetsValue);
+    //   }
+    // } else if (fieldName === "loanToOthers") {
+    //   setLoanToOthers(value);
+    //   const totalAssetsValue = propertyPlantEquipment + value;
+    //   setTotalAssets(totalAssetsValue);
+    // } else if (fieldName === "advancesDeposits&Receivable") {
+    //   setAdvancesDepositsReceivable(value);
+    // } else if (fieldName === "closingBalanceInventory") {
+    //   setClosingBalanceInventory(value);
+    // } else if (fieldName === "bankBalance") {
+    //   setBankBalance(value);
+    // } else if (fieldName === "cashInHand") {
+    //   setCashInHand(value);
+    // }
+
+    // if (fieldName === "opening_balance_capital") {
+    //   if (value === "") {
+    //     setOpeningBalanceCapital(0);
+    //   } else {
+    //     setOpeningBalanceCapital(parseInt(value));
+    //   }
+    // } else if (fieldName === "drawing_during_the_income_year") {
+    //   if (value === "") {
+    //     setDrawingDuringTheIncomeYear(0);
+    //   } else {
+    //     setDrawingDuringTheIncomeYear(parseInt(value));
+    //   }
+    // }
+
+    //   if (fieldName === "long_term_loan") {
+    //     if (value === "") {
+    //       setLongTermLoan(0);
+    //     } else {
+    //       setLongTermLoan(parseInt(value));
+    //     }
+    //   } else if (fieldName === "short_term_borrowings") {
+    //     if (value === "") {
+    //       setShortTermBorrowings(0);
+    //     } else {
+    //       setShortTermBorrowings(parseInt(value));
+    //     }
+    //   } else if (fieldName === "liability_for_other") {
+    //     if (value === "") {
+    //       setLiabilityForOther(0);
+    //     } else {
+    //       setLiabilityForOther(parseInt(value));
+    //     }
+    //   }
   };
+
+  // const grossProfit = revenue - costOfSales;
+  // const netProfit = grossProfit - administrativeExpenses - badDebtExpense;
+
+  // const totalAssets =
+  //   propertyPlantEquipment +
+  //   loanToOthers +
+  //   advancesDepositsReceivable +
+  //   closingBalanceInventory +
+  //   bankBalance +
+  //   cashInHand;
+  // // console.log(typeof totalAssets);
+  // // console.log(netProfit);
+
+  // const totalEquity =
+  //   openingBalanceCapital - drawingDuringTheIncomeYear + netProfit;
+
+  // // console.log(longTermLoan);
+
+  // const liabilities = longTermLoan + shortTermBorrowings + liabilityForOther;
+  // // console.log(liabilities);
+
+  // const totalEquityLiabilities = totalEquity + liabilities;
+
+  // const differences = totalEquityLiabilities - totalAssets;
+  // console.log(differences);
+
+  const handleBusinessInfo = (data) => {
+    console.log("bform:", data);
+
+    // setValue("gross_profit", grossProfit);
+    // setValue("net_profit", netProfit);
+    // setValue("total_assets", totalAssets);
+    // setValue("total_equity_liabilities", totalEquityLiabilities);
+    // setValue("total_equity", totalEquity);
+    // setValue("liabilities", liabilities);
+    // setValue("differences", differences);
+
+    // setFormKey((prevKey) => prevKey + 1);
+
+    const { business_address, business_name, business_type, ...updatedData } =
+      data;
+
+    const businessFormData = {
+      category_name: "Business",
+      address: business_address,
+      business_name,
+      business_type,
+      details: updatedData,
+    };
+    console.log("updated:", businessFormData);
+  };
+
+  useEffect(() => {
+    // setGrossProfit(revenue - costOfSales);
+    // const gross_profit_value = revenue - cost_of_sales;
+    setDependantFields({
+      ...dependantFields,
+      gross_profit: revenue - cost_of_sales,
+    });
+    // setDependantFields((gross_profit = revenue - cost_of_sales));
+    setValue("gross_profit", gross_profit);
+    // setNetProfit(grossProfit - administrativeExpenses - badDebtExpense);
+    setDependantFields({
+      ...dependantFields,
+      net_profit: gross_profit - administrative_expenses - bad_debt_expense,
+    });
+    setValue("net_profit", net_profit);
+    // setTotalAssets(
+    //   propertyPlantEquipment +
+    //     loanToOthers +
+    //     advancesDepositsReceivable +
+    //     closingBalanceInventory +
+    //     bankBalance +
+    //     cashInHand
+    // );
+    setDependantFields({
+      ...dependantFields,
+      total_assets:
+        property_plant_equipment +
+        loan_to_others +
+        advances_deposits_receivable +
+        closing_balance_inventory +
+        bank_balance +
+        cash_in_hand,
+    });
+    setValue("total_assets", total_assets);
+    // setTotalEquity(
+    //   openingBalanceCapital - drawingDuringTheIncomeYear + netProfit
+    // );
+    setDependantFields({
+      ...dependantFields,
+      total_equity:
+        opening_balance_capital - drawing_during_the_income_year + net_profit,
+    });
+    setValue("total_equity", total_equity);
+    // setLiabilities(longTermLoan + shortTermBorrowings + liabilityForOther);
+    setDependantFields({
+      ...dependantFields,
+      liabilities: long_term_loan + short_term_borrowings + liability_for_other,
+    });
+    setValue("liabilities", liabilities);
+    // setTotalEquityLiabilities(totalEquity + liabilities);
+    setDependantFields({
+      ...dependantFields,
+      total_equity_liabilities: total_equity + liabilities,
+    });
+    setValue("total_equity_liabilities", total_equity_liabilities);
+    // setDifferences(totalEquityLiabilities - totalAssets);
+    setDependantFields({
+      ...dependantFields,
+      differences: total_equity_liabilities - total_assets,
+    });
+    setValue("differences", differences);
+  }, [revenue]);
 
   return (
     <div>
@@ -51,8 +416,7 @@ const BusinessForm = () => {
         <TextInput
           item={{
             labelName: "Name of business",
-            registerName: "businessName",
-            type: "text",
+            registerName: "business_name",
             requiredStatus: true,
           }}
           register={register}
@@ -61,18 +425,17 @@ const BusinessForm = () => {
         <TextInput
           item={{
             labelName: "Type of main business or profession",
-            registerName: "businessType",
-            type: "text",
+            registerName: "business_type",
           }}
           register={register}
         ></TextInput>
 
         <div className="w-full lg:w-3/4 my-2 flex items-center">
-          <label className="w-3/5 p-[6px]">Buseness Address</label>
+          <label className="w-3/5 p-[6px]">Business Address</label>
           <textarea
             className="w-2/5 p-1 border border-primary rounded-sm focus:outline-none"
             placeholder="Type here"
-            {...register("busenessAddress")}
+            {...register("business_address")}
           ></textarea>
         </div>
 
@@ -86,52 +449,49 @@ const BusinessForm = () => {
             item={{
               labelName: "Revenue",
               registerName: "revenue",
-              type: "number",
             }}
-            defaultValue={0}
             register={register}
             handleOnchange={handleOnchange}
           ></BusinessFormInput>
           <BusinessFormInput
             item={{
               labelName: "Less: Cost of sales",
-              registerName: "costOfSales",
-              type: "number",
+              registerName: "cost_of_sales",
             }}
-            defaultValue={costOfSales}
             register={register}
+            handleOnchange={handleOnchange}
           ></BusinessFormInput>
           <BusinessFormInput
             item={{
               labelName: "Gross profit",
-              registerName: "grossProfit",
-              type: "number",
+              registerName: "gross_profit",
+              // value: grossProfit,
+              calculativeField: true,
             }}
-            defaultValue={grossProfit}
             register={register}
           ></BusinessFormInput>
           <BusinessFormInput
             item={{
               labelName: "Administrative expenses",
-              registerName: "administrativeExpenses",
-              type: "number",
+              registerName: "administrative_expenses",
             }}
-            defaultValue={administrativeExpenses}
             register={register}
+            handleOnchange={handleOnchange}
           ></BusinessFormInput>
           <BusinessFormInput
             item={{
               labelName: "Bad debt expense",
-              registerName: "badDebtExpense",
-              type: "number",
+              registerName: "bad_debt_expense",
             }}
             register={register}
+            handleOnchange={handleOnchange}
           ></BusinessFormInput>
           <BusinessFormInput
             item={{
               labelName: "Net profit",
-              registerName: "netProfit",
-              type: "number",
+              registerName: "net_profit",
+              // value: netProfit,
+              calculativeField: true,
             }}
             register={register}
           ></BusinessFormInput>
@@ -141,11 +501,11 @@ const BusinessForm = () => {
             <label className="w-3/5 p-[6px]">Total Assets</label>
             <input
               type="number"
-              defaultValue="0"
-              min="0"
+              min={0}
+              // value={totalAssets}
               className="w-2/5 p-1 mr-2 border-0 rounded-sm text-secondary bg-primary focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-              {...register("totalAssets", {
-                required: true,
+              {...register("total_assets", {
+                valueAsNumber: true,
               })}
             />
           </div>
@@ -153,50 +513,50 @@ const BusinessForm = () => {
           <BusinessFormInput
             item={{
               labelName: "Property, Plant and Equipment",
-              registerName: "propertyPlant&Equipment",
-              type: "number",
+              registerName: "property_plant_equipment",
             }}
             register={register}
+            handleOnchange={handleOnchange}
           ></BusinessFormInput>
           <BusinessFormInput
             item={{
               labelName: "Loan to Others",
-              registerName: "loanToOthers",
-              type: "number",
+              registerName: "loan_to_others",
             }}
             register={register}
+            handleOnchange={handleOnchange}
           ></BusinessFormInput>
           <BusinessFormInput
             item={{
               labelName: "Advances, Deposits and Receivable",
-              registerName: "advancesDeposits&Receivable",
-              type: "number",
+              registerName: "advances_deposits_receivable",
             }}
             register={register}
+            handleOnchange={handleOnchange}
           ></BusinessFormInput>
           <BusinessFormInput
             item={{
               labelName: "Closing balanceInventory",
-              registerName: "closingBalanceInventory",
-              type: "number",
+              registerName: "closing_balance_inventory",
             }}
             register={register}
+            handleOnchange={handleOnchange}
           ></BusinessFormInput>
           <BusinessFormInput
             item={{
               labelName: "Bank Balance",
-              registerName: "bankBalance",
-              type: "number",
+              registerName: "bank_balance",
             }}
             register={register}
+            handleOnchange={handleOnchange}
           ></BusinessFormInput>
           <BusinessFormInput
             item={{
               labelName: "Cash in Hand",
-              registerName: "cashInHand",
-              type: "number",
+              registerName: "cash_in_hand",
             }}
             register={register}
+            handleOnchange={handleOnchange}
           ></BusinessFormInput>
         </div>
         <div className="w-full lg:w-3/4 my-4 p-2 border border-primary rounded-sm">
@@ -206,41 +566,42 @@ const BusinessForm = () => {
             </label>
             <input
               type="number"
-              defaultValue="0"
-              min="0"
+              // value={totalEquityLiabilities}
+              min={0}
               className="w-2/5 p-1 mr-2 border-0 rounded-sm text-secondary bg-primary focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-              {...register("totalEquity&Liabilities", {
-                required: true,
+              {...register("total_equity_liabilities", {
+                valueAsNumber: true,
               })}
             />
           </div>
 
-          <BusinessFormInput
-            equity
-            and
-            liabilitieseldItem
-            item={{
-              labelName: "Total equity",
-              registerName: "totalEquity",
-              type: "number",
-            }}
-            register={register}
-          ></BusinessFormInput>
+          <div className="-full my-2 flex items-center font-bold">
+            <label className="w-3/5 p-[6px]">Total Equity</label>
+            <input
+              type="number"
+              min={0}
+              // value={totalEquity}
+              className="w-2/5 p-1 border border-primary rounded-sm focus:outline-none"
+              {...register("total_equity", {
+                valueAsNumber: true,
+              })}
+            />
+          </div>
           <BusinessFormInput
             item={{
               labelName: "Opening balance Capital",
-              registerName: "openingBalanceCapital",
-              type: "number",
+              registerName: "opening_balance_capital",
             }}
             register={register}
+            handleOnchange={handleOnchange}
           ></BusinessFormInput>
           <BusinessFormInput
             item={{
               labelName: "Drawing during the income year",
-              registerName: "drawingDuringTheIncomeYear",
-              type: "number",
+              registerName: "drawing_during_the_income_year",
             }}
             register={register}
+            handleOnchange={handleOnchange}
           ></BusinessFormInput>
         </div>
         <div className="w-full lg:w-3/4 my-4 p-2 border border-primary rounded-sm">
@@ -248,44 +609,45 @@ const BusinessForm = () => {
             <label className="w-3/5 p-[6px]">Liabilities</label>
             <input
               type="number"
-              defaultValue="0"
-              min="0"
+              // value={liabilities}
+              min={0}
               className="w-2/5 p-1 mr-2 border-0 rounded-sm text-secondary bg-primary focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-              {...register("totalAssets", {
-                required: true,
+              {...register("liabilities", {
+                valueAsNumber: true,
               })}
             />
           </div>
-
           <BusinessFormInput
             item={{
               labelName: "Long term loan",
-              registerName: "longTermLoan",
-              type: "number",
+              registerName: "long_term_loan",
+              // value: differences,
             }}
             register={register}
+            handleOnchange={handleOnchange}
           ></BusinessFormInput>
           <BusinessFormInput
             item={{
               labelName: "Short-term borrowings",
-              registerName: "shortTermBorrowings",
-              type: "number",
+              registerName: "short_term_borrowings",
             }}
             register={register}
+            handleOnchange={handleOnchange}
           ></BusinessFormInput>
           <BusinessFormInput
             item={{
               labelName: "Liability for other",
-              registerName: "liabilityForOther",
-              type: "number",
+              registerName: "liability_for_other",
             }}
             register={register}
+            handleOnchange={handleOnchange}
           ></BusinessFormInput>
           <BusinessFormInput
             item={{
               labelName: "Differences",
               registerName: "differences",
-              type: "number",
+              value: differences,
+              calculativeField: true,
             }}
             register={register}
           ></BusinessFormInput>
@@ -294,6 +656,8 @@ const BusinessForm = () => {
         <SubmitBtn btnText={"Submit"}></SubmitBtn>
       </form>
       {/* business info */}
+
+      <Toaster position="top-center" reverseOrder={false} />
     </div>
   );
 };

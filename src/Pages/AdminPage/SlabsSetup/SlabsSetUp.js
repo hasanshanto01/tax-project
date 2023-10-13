@@ -27,6 +27,7 @@ const SlabsSetUp = ({ slabList }) => {
             <tr>
               <th></th>
               <th>Slabs</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>

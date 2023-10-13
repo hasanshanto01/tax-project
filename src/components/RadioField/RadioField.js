@@ -6,9 +6,7 @@ const RadioField = ({
   selectedOption,
   handleRadioOptionChange,
 }) => {
-  const { lableName, registerName, value } = item;
-
-  // console.log("lg:", typeof value);
+  const { labelName, registerName, value } = item;
 
   return (
     <div className="flex items-center">
@@ -22,7 +20,7 @@ const RadioField = ({
         checked={selectedOption === value}
         onChange={handleRadioOptionChange}
       />
-      <label className="p-1">{lableName}</label>
+      <label className="p-1">{labelName}</label>
     </div>
   );
 };

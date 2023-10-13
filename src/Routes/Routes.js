@@ -17,6 +17,9 @@ import ReportPage from "../Pages/ReportPage/ReportPage";
 import SalarySchema from "../Pages/ReportSchema/SalarySchema";
 import PrivateRoute from "./PrivateRoute";
 import ReturnSchema from "../Pages/ReportSchema/ReturnSchema";
+import DynamicForm from "../Pages/OTP/DynamicForm";
+import TestForm from "../Pages/OTP/TestForm";
+import ActiveReport from "../Pages/OTP/ActiveReport";
 
 export const routes = createBrowserRouter([
   {
@@ -71,6 +74,15 @@ export const routes = createBrowserRouter([
       {
         path: "/personalInfo",
         element: <PersonalInfo></PersonalInfo>,
+        loader: () => {
+          return fetch(`http://127.0.0.1:8000/api/v1/personal-details/`, {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            },
+          });
+        },
       },
       {
         path: "/admin",
@@ -101,6 +113,22 @@ export const routes = createBrowserRouter([
         element: <Slabs></Slabs>,
       },
       {
+        path: "/slabs/:id",
+        element: <Slabs></Slabs>,
+        loader: ({ params }) => {
+          return fetch(
+            `http://127.0.0.1:8000/api/v1/slab-retrieve/${params.id}`,
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+              },
+            }
+          );
+        },
+      },
+      {
         path: "/report",
         element: <ReportPage></ReportPage>,
       },
@@ -120,6 +148,15 @@ export const routes = createBrowserRouter([
       {
         path: "/report/returnSchema",
         element: <ReturnSchema></ReturnSchema>,
+        loader: () => {
+          return fetch(`http://127.0.0.1:8000/api/v1/return/`, {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            },
+          });
+        },
       },
     ],
   },
@@ -134,5 +171,26 @@ export const routes = createBrowserRouter([
   {
     path: "/pdf",
     element: <PdfTest></PdfTest>,
+  },
+  {
+    path: "/dynamicform",
+    element: <DynamicForm></DynamicForm>,
+  },
+  {
+    path: "/testform",
+    element: <TestForm></TestForm>,
+  },
+  {
+    path: "/demoreport",
+    element: <ActiveReport></ActiveReport>,
+    loader: () => {
+      return fetch(`http://127.0.0.1:8000/api/v1/return/`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      });
+    },
   },
 ]);

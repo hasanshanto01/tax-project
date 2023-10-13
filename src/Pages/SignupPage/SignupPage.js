@@ -48,7 +48,7 @@ const SignupPage = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        // console.log("sr:", data);
+        console.log("sr:", data);
         setUser(data);
         toast.success("User created successfully. Please, verify user.");
         document.getElementById("otp_modal").showModal();

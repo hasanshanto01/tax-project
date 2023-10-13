@@ -1,25 +1,23 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
-import InputFieldItem from "../../../components/InputFieldItem/InputFieldItem";
 import CheckBoxField from "../../../components/CheckBoxField/CheckBoxField";
-import { useLoaderData, useLocation, useNavigate } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import SubmitBtn from "../../../components/SubmitBtn/SubmitBtn";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeftLong } from "@fortawesome/free-solid-svg-icons";
-import QueryMenu from "../../../Shared/QueryMenu/QueryMenu";
 import toast, { Toaster } from "react-hot-toast";
+import TextInput from "../../../components/TextInput/TextInput";
+import NumberInput from "../../../components/NumberInput/NumberInput";
 
 const CategoryDescription = () => {
-  // const [btnText, setBtnText] = useState("");
   const categoryItem = useLoaderData();
-  // console.log(categoryItem.active);
+  // console.log(categoryItem);
 
   const navigate = useNavigate();
 
-  const { state } = useLocation();
-  // const { btnType } = state;
-  // console.log(btnType);
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, setValue, reset } = useForm({
+    defaultValues: categoryItem,
+  });
 
   const categoryList = [
     {
@@ -63,51 +61,93 @@ const CategoryDescription = () => {
     navigate("/admin");
   };
 
-  // useEffect(() => {
-  //   if (btnType === "add") {
-  //     setBtnText("Add");
-  //   } else if (btnType === "edit") {
-  //     setBtnText("Update");
-  //   } else if (btnType === "delete") {
-  //     setBtnText("Delete");
-  //   }
-  // }, [btnType]);
+  const handleBtnAction = (e) => {
+    setValue("btnAction", e.target.innerText);
+  };
 
   const handleDescriptionDetails = (data) => {
     // console.log("ctd", data);
-    // const updatedSequence = Number(data.sequence);
-    // data.sequence = +data.sequence;
-    // if (data.sequence == NaN) {
-    //   delete data.data.sequence;
-    // }
+    const { btnAction, ...submitedData } = data;
+    // console.log("s-ctd:", submitedData);
 
-    // if (data.active) {
-    //   data.required = true;
-    // } else {
-    //   data.required = false;
-    // }
+    if (btnAction.toLowerCase() === "update") {
+      const { required, ...updatedData } = submitedData;
+      // console.log("u-ctd:", updatedData);
+      // console.log(
+      //   "url:",
+      //   categoryItem?.category_name,
+      //   categoryItem?.description
+      // );
 
-    // console.log("ctdF", data);
-
-    fetch("http://127.0.0.1:8000/api/v1/category-setup-create/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-      },
-      body: JSON.stringify(data),
-    })
-      .then((res) => res.json())
-      .then((resData) => {
-        console.log("res:", resData);
-        if (resData) {
-          toast.success("Category Setup created successfully");
+      fetch(
+        `http://127.0.0.1:8000/api/v1/category-retrieve/${categoryItem?.category_name}/${categoryItem?.description}/`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+          body: JSON.stringify(updatedData),
         }
+      )
+        .then((res) => res.json())
+        .then((resData) => {
+          console.log("res:", resData);
+          if (resData.description) {
+            toast.success("Category Setup updated successfully");
+            reset();
+            navigate("/admin");
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          // toast.err(err.message);
+        });
+    } else if (btnAction.toLowerCase() === "delete") {
+      fetch(
+        `http://127.0.0.1:8000/api/v1/category-retrieve/${categoryItem?.category_name}/${categoryItem?.description}/`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        }
+      )
+        .then((res) => res.text())
+        .then((resData) => {
+          console.log("res:", resData);
+          toast.success("Category Setup deleted successfully");
+          reset();
+          navigate("/admin");
+        })
+        .catch((err) => {
+          console.log(err);
+          // toast.err(err.message);
+        });
+    } else {
+      fetch("http://127.0.0.1:8000/api/v1/category-setup-create/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+        body: JSON.stringify(submitedData),
       })
-      .catch((err) => {
-        console.log(err);
-        toast.err(err.message);
-      });
+        .then((res) => res.json())
+        .then((resData) => {
+          console.log("res:", resData);
+          if (resData.description) {
+            toast.success("Category Setup created successfully");
+            reset();
+            navigate("/admin");
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          toast.err(err.message);
+        });
+    }
   };
 
   return (
@@ -129,9 +169,7 @@ const CategoryDescription = () => {
             className="w-2/5 p-1 border border-primary rounded-sm focus:outline-none"
             {...register("category_name", { required: true })}
           >
-            {/* <option value="resident">Resident</option>
-            <option value="nonResident">Non-resident</option> */}
-            {categoryList.map((category) => (
+            {categoryList?.map((category) => (
               <option key={category.id} value={category.value}>
                 {category.title}
               </option>
@@ -142,48 +180,28 @@ const CategoryDescription = () => {
 
         <div className="w-full lg:w-3/4 my-2 flex items-center">
           <label className="w-3/5 p-[6px]">Description</label>
-          {categoryItem ? (
-            <textarea
-              className="w-2/5 p-1 border border-primary rounded-sm focus:outline-none"
-              defaultValue={categoryItem.description}
-              {...register("description")}
-            ></textarea>
-          ) : (
-            <textarea
-              className="w-2/5 p-1 border border-primary rounded-sm focus:outline-none"
-              placeholder="Type here"
-              {...register("description")}
-            ></textarea>
-          )}
+          <textarea
+            className="w-2/5 p-1 border border-primary rounded-sm focus:outline-none"
+            placeholder="Type here"
+            {...register("description")}
+          ></textarea>
         </div>
 
-        {categoryItem ? (
-          <CheckBoxField
-            item={{
-              labelName: "Tax Exempted",
-              registerName: "tax_exempted",
-            }}
-            register={register}
-            checkStatus={categoryItem.active}
-          ></CheckBoxField>
-        ) : (
-          <CheckBoxField
-            item={{
-              labelName: "Tax Exempted",
-              registerName: "tax_exempted",
-            }}
-            register={register}
-          ></CheckBoxField>
-        )}
+        <CheckBoxField
+          item={{
+            labelName: "Tax Exempted",
+            registerName: "tax_exempted",
+          }}
+          register={register}
+        ></CheckBoxField>
 
-        <InputFieldItem
+        <TextInput
           item={{
             labelName: "Aggregated",
             registerName: "aggregated",
-            type: "text",
           }}
           register={register}
-        ></InputFieldItem>
+        ></TextInput>
 
         <CheckBoxField
           item={{
@@ -193,14 +211,13 @@ const CategoryDescription = () => {
           register={register}
         ></CheckBoxField>
 
-        <InputFieldItem
+        <NumberInput
           item={{
             labelName: "Sequence",
             registerName: "sequence",
-            type: "number",
           }}
           register={register}
-        ></InputFieldItem>
+        ></NumberInput>
 
         <CheckBoxField
           item={{
@@ -210,42 +227,25 @@ const CategoryDescription = () => {
           register={register}
         ></CheckBoxField>
 
-        {/* <SubmitBtn btnText={btnText}></SubmitBtn> */}
-        {/* {btnType === "add" && (
-          <div className="w-full lg:w-3/4 flex justify-end">
-            <button className="btn btn-primary text-secondary my-3 w-[150px]">
-              Submit
-            </button>
-          </div>
-        )}
-        {btnType === "edit" && (
-          <div className="w-full lg:w-3/4 flex justify-end">
-            <button className="btn btn-primary text-secondary my-3 w-[150px]">
-              Edit
-            </button>
-          </div>
-        )}
-        {btnType === "delete" && (
-          <div className="w-full lg:w-3/4 flex justify-end">
-            <button className="btn btn-error text-secondary my-3 w-[150px]">
-              Delete
-            </button>
-          </div>
-        )} */}
+        <input type="hidden" {...register("btnAction")} />
         {categoryItem ? (
           <div className="w-full lg:w-3/4 flex justify-end gap-3">
-            <button className="btn btn-primary text-secondary my-3 w-[150px]">
+            <button
+              className="btn btn-primary text-secondary my-3 w-[150px]"
+              onClick={handleBtnAction}
+            >
               Update
             </button>
-            <button className="btn btn-error text-secondary my-3 w-[150px]">
+            <button
+              className="btn btn-error text-secondary my-3 w-[150px]"
+              onClick={handleBtnAction}
+            >
               Delete
             </button>
           </div>
         ) : (
           <div className="w-full lg:w-3/4 flex justify-end">
-            <button className="btn btn-primary text-secondary my-3 w-[150px]">
-              Submit
-            </button>
+            <SubmitBtn btnText={"submit"}></SubmitBtn>
           </div>
         )}
       </form>

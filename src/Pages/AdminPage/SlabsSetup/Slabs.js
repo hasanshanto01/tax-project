@@ -4,14 +4,20 @@ import SubmitBtn from "../../../components/SubmitBtn/SubmitBtn";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeftLong } from "@fortawesome/free-solid-svg-icons";
-import { useNavigate } from "react-router-dom";
-import InputFieldItem from "../../../components/InputFieldItem/InputFieldItem";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
+import TextInput from "../../../components/TextInput/TextInput";
+import NumberInput from "../../../components/NumberInput/NumberInput";
 
 const Slabs = () => {
+  const slabItem = useLoaderData();
+  // console.log(slabItem);
+
   const navigate = useNavigate();
 
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, setValue, reset } = useForm({
+    defaultValues: slabItem,
+  });
 
   const handleBackBtn = () => {
     navigate("/admin");
@@ -40,31 +46,89 @@ const Slabs = () => {
     },
     {
       id: 5,
-      title: "War-wounded gazetted freedom fighters",
-      value: "War-wounded gazetted freedom fighters",
+      title: "War wounded gazetted freedom fighters",
+      value: "War wounded gazetted freedom fighters",
     },
   ];
 
+  const handleBtnAction = (e) => {
+    setValue("btnAction", e.target.innerText);
+  };
+
   const handleSlabs = (data) => {
-    // console.log(data);
+    console.log("sl:", data);
     data.percentage = parseFloat(data.percentage);
 
-    fetch("http://127.0.0.1:8000/api/v1/slab-create/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-      },
-      body: JSON.stringify(data),
-    })
-      .then((res) => res.json())
-      .then((resData) => {
-        // console.log("res:", resData);
-        toast.success("Slab created successfully");
+    const { btnAction, id, ...submitedData } = data;
+    console.log("s-sl:", submitedData);
+
+    if (btnAction.toLowerCase() === "update") {
+      // const { id, ...updatedData } = submitedData;
+      // console.log("u-sl:", updatedData);
+
+      fetch(`http://127.0.0.1:8000/api/v1/slab-retrieve/${slabItem.id}/`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+        body: JSON.stringify(submitedData),
       })
-      .catch((err) => {
-        console.log(err);
-      });
+        .then((res) => res.json())
+        .then((resData) => {
+          console.log("res:", resData);
+          if (resData.id) {
+            toast.success("Slab updated successfully");
+            reset();
+            navigate("/admin");
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          // toast.err(err.message);
+        });
+    } else if (btnAction.toLowerCase() === "delete") {
+      fetch(`http://127.0.0.1:8000/api/v1/slab-retrieve/${slabItem.id}/`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+        body: JSON.stringify(submitedData),
+      })
+        .then((res) => res.text())
+        .then((resData) => {
+          console.log("res:", resData);
+          toast.success("Slab deleted successfully");
+          reset();
+          navigate("/admin");
+        })
+        .catch((err) => {
+          console.log(err);
+          // toast.err(err.message);
+        });
+    } else {
+      fetch("http://127.0.0.1:8000/api/v1/slab-create/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+        body: JSON.stringify(submitedData),
+      })
+        .then((res) => res.json())
+        .then((resData) => {
+          // console.log("res:", resData);
+          if (resData.id) {
+            toast.success("Slab created successfully");
+            reset();
+            navigate("/admin");
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
 
   return (
@@ -95,39 +159,51 @@ const Slabs = () => {
         </div>
         {/* select one */}
 
-        <InputFieldItem
+        <TextInput
           item={{
             labelName: "Title",
             registerName: "title",
-            type: "text",
           }}
           register={register}
-        ></InputFieldItem>
+        ></TextInput>
 
-        <InputFieldItem
+        <NumberInput
           item={{
             labelName: "Amount",
             registerName: "amount",
-            type: "number",
           }}
           register={register}
-        ></InputFieldItem>
+        ></NumberInput>
 
-        <InputFieldItem
+        <NumberInput
           item={{
             labelName: "Percentage",
             registerName: "percentage",
-            type: "number",
           }}
           register={register}
-        ></InputFieldItem>
+        ></NumberInput>
 
-        {/* <SubmitBtn btnText={"Add"}></SubmitBtn> */}
-        <div className="w-full lg:w-3/4 flex justify-end">
-          <button className="btn btn-primary text-secondary my-3 w-[150px]">
-            Submit
-          </button>
-        </div>
+        <input type="hidden" {...register("btnAction")} />
+        {slabItem ? (
+          <div className="w-full lg:w-3/4 flex justify-end gap-3">
+            <button
+              className="btn btn-primary text-secondary my-3 w-[150px]"
+              onClick={handleBtnAction}
+            >
+              Update
+            </button>
+            <button
+              className="btn btn-error text-secondary my-3 w-[150px]"
+              onClick={handleBtnAction}
+            >
+              Delete
+            </button>
+          </div>
+        ) : (
+          <div className="w-full lg:w-3/4 flex justify-end">
+            <SubmitBtn btnText={"submit"}></SubmitBtn>
+          </div>
+        )}
       </form>
       <Toaster position="top-center" reverseOrder={false} />
     </div>

@@ -199,174 +199,182 @@ const SalarySchema = () => {
         </button>
       </div>
       <div
-        className="w-full lg:w-[65%] lg:mx-auto my-3 lg:my-0 mb-6 p-3 text-sm border border-red-500"
+        className="w-full lg:w-[65%] lg:mx-auto my-3 lg:my-0 mb-6 p-3 text-sm"
         ref={componentRef}
       >
-        <div>
+        <div className="w-[210mm] h-[270mm] border p-2">
+          <br />
+          <br />
           <div>
-            <p className="font-bold text-center mb-2">
-              Particulars of income from Salaries
-            </p>
-            <p>
-              a. This part is applicable for employees receiving Salary under
-              Govt. pay scale
-            </p>
-            <p className="mt-3 mb-[6px]">
-              Name of the Assessee:{" "}
-              <span className="ml-3 font-bold">Abu Babu</span>
-            </p>
-            <div className="flex justify-end items-center gap-2">
-              <p className="font-bold">TIN:</p>
-              <table className="border-collapse border border-slate-400 ...">
+            <div>
+              <p className="font-bold text-center mb-2">
+                Particulars of income from Salaries
+              </p>
+              <p>
+                a. This part is applicable for employees receiving Salary under
+                Govt. pay scale
+              </p>
+              <p className="mt-3 mb-[6px]">
+                Name of the Assessee:{" "}
+                <span className="ml-3 font-bold">Abu Babu</span>
+              </p>
+              <div className="flex justify-end items-center gap-2">
+                <p className="font-bold">TIN:</p>
+                <table className="border-collapse border border-slate-400 ...">
+                  <thead>
+                    <tr></tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      {Array.from(tinNumber).map((element, i) => (
+                        <td
+                          className="border border-black w-6 text-center font-bold"
+                          key={i}
+                        >
+                          {element}
+                        </td>
+                      ))}
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div className="mt-2">
+              <table className="w-full border-collapse border border-black">
                 <thead>
-                  <tr></tr>
+                  <tr>
+                    <th className="border border-black">Sl.</th>
+                    <th className="border border-black">Particulars</th>
+                    <th className="border border-black">Income ৳</th>
+                    <th className="border border-black">
+                      Tax exempted Income ৳ <br />
+                      (B)
+                    </th>
+                    <th className="border border-black">Taxable Income ৳</th>
+                  </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    {Array.from(tinNumber).map((element, i) => (
-                      <td
-                        className="border border-black w-6 text-center font-bold"
-                        key={i}
-                      >
-                        {element}
+                  {government_details?.map((data, i) => (
+                    <tr key={data.id}>
+                      <td className="border border-black text-center">
+                        {i + 1}
                       </td>
-                    ))}
+                      <td className="border border-black pl-2">
+                        {data.description}
+                      </td>
+                      <td className="border border-black text-right w-16 lg:w-32 pr-2">
+                        {data.amount}
+                      </td>
+                      {data.tax_exempted ? (
+                        <td className="border border-black text-right w-16 lg:w-32 pr-2">
+                          {data.amount}
+                        </td>
+                      ) : (
+                        <td className="border border-black text-center font-semibold w-16 lg:w-32">
+                          -
+                        </td>
+                      )}
+                      {!data.tax_exempted ? (
+                        <td className="border border-black text-right w-16 lg:w-32 pr-2">
+                          {data.amount}
+                        </td>
+                      ) : (
+                        <td className="border border-black text-center font-semibold w-16 lg:w-32">
+                          -
+                        </td>
+                      )}
+                    </tr>
+                  ))}
+                  <tr className="font-bold">
+                    <td className="border border-black text-center">
+                      {government_details.length + 1}
+                    </td>
+                    <td className="border border-black pl-2">Total</td>
+                    <td className="border border-black text-right w-16 lg:w-32 pr-2">
+                      {total}
+                    </td>
+                    <td className="border border-black text-right w-16 lg:w-32 pr-2">
+                      {taxExemptedIncome}
+                    </td>
+                    <td className="border border-black text-right w-16 lg:w-32 pr-2">
+                      {taxableIncome}
+                    </td>
                   </tr>
                 </tbody>
               </table>
             </div>
           </div>
-          <div className="mt-2">
-            <table className="w-full border-collapse border border-black">
-              <thead>
-                <tr>
-                  <th className="border border-black">Sl.</th>
-                  <th className="border border-black">Particulars</th>
-                  <th className="border border-black">Income ৳</th>
-                  <th className="border border-black">
-                    Tax exempted Income ৳ <br />
-                    (B)
-                  </th>
-                  <th className="border border-black">Taxable Income ৳</th>
-                </tr>
-              </thead>
-              <tbody>
-                {government_details?.map((data, i) => (
-                  <tr key={data.id}>
-                    <td className="border border-black text-center">{i + 1}</td>
-                    <td className="border border-black pl-2">
-                      {data.description}
-                    </td>
-                    <td className="border border-black text-right w-16 lg:w-32 pr-2">
-                      {data.amount}
-                    </td>
-                    {data.tax_exempted ? (
+          <div>
+            <div className="my-3">
+              <p>
+                b. This part is applicable for employees other than employees
+                receiving Salary under Govt. pay scale
+              </p>
+            </div>
+            <div className="my-2">
+              <table className="w-full border-collapse border border-black">
+                <thead>
+                  <tr>
+                    <th className="border border-black">Sl.</th>
+                    <th className="border border-black">Particulars</th>
+                    <th className="border border-black">Income ৳</th>
+                    <th className="border border-black">Income ৳</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {private_details.map((data, i) => (
+                    <tr key={data.id}>
+                      <td className="border border-black text-center">
+                        {i + 1}
+                      </td>
+                      <td className="border border-black pl-2">
+                        {data.description}
+                      </td>
                       <td className="border border-black text-right w-16 lg:w-32 pr-2">
                         {data.amount}
                       </td>
-                    ) : (
-                      <td className="border border-black text-center font-semibold w-16 lg:w-32">
-                        -
-                      </td>
-                    )}
-                    {!data.tax_exempted ? (
-                      <td className="border border-black text-right w-16 lg:w-32 pr-2">
-                        {data.amount}
-                      </td>
-                    ) : (
-                      <td className="border border-black text-center font-semibold w-16 lg:w-32">
-                        -
-                      </td>
-                    )}
-                  </tr>
-                ))}
-                <tr className="font-bold">
-                  <td className="border border-black text-center">
-                    {government_details.length + 1}
-                  </td>
-                  <td className="border border-black pl-2">Total</td>
-                  <td className="border border-black text-right w-16 lg:w-32 pr-2">
-                    {total}
-                  </td>
-                  <td className="border border-black text-right w-16 lg:w-32 pr-2">
-                    {taxExemptedIncome}
-                  </td>
-                  <td className="border border-black text-right w-16 lg:w-32 pr-2">
-                    {taxableIncome}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-        <div>
-          <div className="my-3">
-            <p>
-              b. This part is applicable for employees other than employees
-              receiving Salary under Govt. pay scale
-            </p>
-          </div>
-          <div className="my-2">
-            <table className="w-full border-collapse border border-black">
-              <thead>
-                <tr>
-                  <th className="border border-black">Sl.</th>
-                  <th className="border border-black">Particulars</th>
-                  <th className="border border-black">Income ৳</th>
-                  <th className="border border-black">Income ৳</th>
-                </tr>
-              </thead>
-              <tbody>
-                {private_details.map((data, i) => (
-                  <tr key={data.id}>
-                    <td className="border border-black text-center">{i + 1}</td>
+                      {i[0] === 0 && (
+                        <td className="border border-black text-right w-16 lg:w-32 pr-2"></td>
+                      )}
+                    </tr>
+                  ))}
+                  <tr>
+                    <td className="border border-black text-center">
+                      {private_details.length + 1}
+                    </td>
                     <td className="border border-black pl-2">
-                      {data.description}
+                      Total salary income (aggregate of 1 to 12){" "}
+                    </td>
+                    <td rowSpan={3}></td>
+                    <td className="border border-black text-right w-16 lg:w-32 pr-2">
+                      {totalSalaryIncome}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-black text-center">
+                      {private_details.length + 2}
+                    </td>
+                    <td className="border border-black pl-2">
+                      Exempted Salary (As per 6th schedule Part 1)
                     </td>
                     <td className="border border-black text-right w-16 lg:w-32 pr-2">
-                      {data.amount}
+                      {exemptedSalary}
                     </td>
-                    {i[0] === 0 && (
-                      <td className="border border-black text-right w-16 lg:w-32 pr-2"></td>
-                    )}
                   </tr>
-                ))}
-                <tr>
-                  <td className="border border-black text-center">
-                    {private_details.length + 1}
-                  </td>
-                  <td className="border border-black pl-2">
-                    Total salary income (aggregate of 1 to 12){" "}
-                  </td>
-                  <td rowSpan={3}></td>
-                  <td className="border border-black text-right w-16 lg:w-32 pr-2">
-                    {totalSalaryIncome}
-                  </td>
-                </tr>
-                <tr>
-                  <td className="border border-black text-center">
-                    {private_details.length + 2}
-                  </td>
-                  <td className="border border-black pl-2">
-                    Exempted Salary (As per 6th schedule Part 1)
-                  </td>
-                  <td className="border border-black text-right w-16 lg:w-32 pr-2">
-                    {exemptedSalary}
-                  </td>
-                </tr>
-                <tr className="font-bold">
-                  <td className="border border-black text-center">
-                    {private_details.length + 3}
-                  </td>
-                  <td className="border border-black pl-2">
-                    Total Income from Salary (13-14)
-                  </td>
-                  <td className="border border-black text-right w-16 lg:w-32 pr-2">
-                    {totalIncome}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+                  <tr className="font-bold">
+                    <td className="border border-black text-center">
+                      {private_details.length + 3}
+                    </td>
+                    <td className="border border-black pl-2">
+                      Total Income from Salary (13-14)
+                    </td>
+                    <td className="border border-black text-right w-16 lg:w-32 pr-2">
+                      {totalIncome}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
