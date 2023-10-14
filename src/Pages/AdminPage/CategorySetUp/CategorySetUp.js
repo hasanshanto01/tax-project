@@ -1,66 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import TableRow from "../../../components/TableRow/TableRow";
 import { useNavigate } from "react-router-dom";
 
 const CategorySetUp = ({ categorySetupList }) => {
   const navigate = useNavigate();
 
-  const descriptionItems = [
-    {
-      id: "1",
-      description: "Basic pay",
-      sequence: 1,
-    },
-    {
-      id: "2",
-      description: "Arrear pay (if not included in taxable income earlier)",
-      sequence: 2,
-    },
-    {
-      id: "3",
-      description: "Special allowance",
-      sequence: 3,
-    },
-    {
-      id: "4",
-      description: "House rent allowance",
-      sequence: 4,
-    },
-    {
-      id: "5",
-      description: "Medical allowance",
-      sequence: 5,
-    },
-  ];
-
   const handleNewBtn = () => {
-    navigate("/categorySetup", { state: { btnType: "add" } });
     navigate("/categorySetup");
   };
-  const handleEditBtn = (id) => {
-    // console.log(id);
-    // navigate("/categorySetup", { state: { btnType: "edit" } });
-    navigate("/categorySetup");
-  };
-  const handleDeleteBtn = (id) => {
-    // console.log(id);
-    // navigate("/categorySetup", { state: { btnType: "delete" } });
-    navigate("/categorySetup");
-  };
-
-  // useEffect(() => {
-  //   fetch()
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       console.log(data);
-  //     })
-  //     .catch((err) => console.log(err));
-  // }, []);
-  // console.log(categorySetupList);
-
-  // const handleCategorySetupModify = (category_name, category_description) => {
-  //   console.log(category_name, category_description);
-  // };
 
   return (
     <div className="">
@@ -92,7 +39,6 @@ const CategorySetUp = ({ categorySetupList }) => {
                   key={i}
                   categoryItem={categoryItem}
                   rowNum={i + 1}
-                  // handleCategorySetupModify={handleCategorySetupModify}
                 ></TableRow>
               ))}
           </tbody>

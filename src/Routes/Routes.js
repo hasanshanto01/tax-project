@@ -17,6 +17,12 @@ import ReportPage from "../Pages/ReportPage/ReportPage";
 import SalarySchema from "../Pages/ReportSchema/SalarySchema";
 import PrivateRoute from "./PrivateRoute";
 import ReturnSchema from "../Pages/ReportSchema/ReturnSchema";
+import DynamicForm from "../Pages/OTP/DynamicForm";
+import TestForm from "../Pages/OTP/TestForm";
+import ActiveReport from "../Pages/OTP/ActiveReport";
+
+// const baseURL = `http://127.0.0.1:8000/api/v1`;
+const baseURL = `http://62.171.179.61:8000/api/v1`;
 
 export const routes = createBrowserRouter([
   {
@@ -45,7 +51,7 @@ export const routes = createBrowserRouter([
             element: <FormPage></FormPage>,
             loader: ({ params }) => {
               return fetch(
-                `http://127.0.0.1:8000/api/v1/category-setup-list/${params.category_name}/`,
+                `${baseURL}/category-setup-list/${params.category_name}/`,
                 {
                   method: "GET",
                   headers: {
@@ -71,6 +77,15 @@ export const routes = createBrowserRouter([
       {
         path: "/personalInfo",
         element: <PersonalInfo></PersonalInfo>,
+        loader: () => {
+          return fetch(`${baseURL}/personal-details/`, {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            },
+          });
+        },
       },
       {
         path: "/admin",
@@ -85,7 +100,7 @@ export const routes = createBrowserRouter([
         element: <CategoryDescription></CategoryDescription>,
         loader: ({ params }) => {
           return fetch(
-            `http://127.0.0.1:8000/api/v1/category-retrieve/${params.category_name}/${params.description}`,
+            `${baseURL}/category-retrieve/${params.category_name}/${params.description}`,
             {
               method: "GET",
               headers: {
@@ -101,6 +116,19 @@ export const routes = createBrowserRouter([
         element: <Slabs></Slabs>,
       },
       {
+        path: "/slabs/:id",
+        element: <Slabs></Slabs>,
+        loader: ({ params }) => {
+          return fetch(`${baseURL}/slab-retrieve/${params.id}`, {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            },
+          });
+        },
+      },
+      {
         path: "/report",
         element: <ReportPage></ReportPage>,
       },
@@ -108,7 +136,7 @@ export const routes = createBrowserRouter([
         path: "/report/salarySchema",
         element: <SalarySchema></SalarySchema>,
         loader: () => {
-          return fetch(`http://127.0.0.1:8000/api/v1/salary-report/`, {
+          return fetch(`${baseURL}/salary-report/`, {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
@@ -120,6 +148,15 @@ export const routes = createBrowserRouter([
       {
         path: "/report/returnSchema",
         element: <ReturnSchema></ReturnSchema>,
+        loader: () => {
+          return fetch(`${baseURL}/return/`, {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            },
+          });
+        },
       },
     ],
   },
@@ -134,5 +171,26 @@ export const routes = createBrowserRouter([
   {
     path: "/pdf",
     element: <PdfTest></PdfTest>,
+  },
+  {
+    path: "/dynamicform",
+    element: <DynamicForm></DynamicForm>,
+  },
+  {
+    path: "/testform",
+    element: <TestForm></TestForm>,
+  },
+  {
+    path: "/demoreport",
+    element: <ActiveReport></ActiveReport>,
+    loader: () => {
+      return fetch(`${baseURL}/return/`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      });
+    },
   },
 ]);

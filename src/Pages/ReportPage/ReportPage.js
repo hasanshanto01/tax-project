@@ -15,6 +15,10 @@ const ReportPage = () => {
       reportName: "Business & Credit",
       path: "business&CreditSchema",
     },
+    {
+      reportName: "Return",
+      path: "returnSchema",
+    },
   ];
 
   return (
@@ -25,7 +29,7 @@ const ReportPage = () => {
           <thead className="text-base">
             <tr>
               <th></th>
-              <th>Report Name</th>
+              <th>Reports</th>
             </tr>
           </thead>
           <tbody>

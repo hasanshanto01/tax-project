@@ -12,11 +12,13 @@ const LoginPage = () => {
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
 
+  const { baseURL } = useContext(AuthContext);
+
   const { register, handleSubmit } = useForm();
 
   const handleLoginForm = (loginData) => {
     // console.log(loginData);
-    fetch("http://127.0.0.1:8000/api/v1/signin/", {
+    fetch(`${baseURL}/signin/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

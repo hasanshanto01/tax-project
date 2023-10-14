@@ -1,42 +1,56 @@
 import React from "react";
 
-const BusinessFormInput = ({ item, handleOnchange }) => {
-  const { labelName, registerName, type, defaultValue, requiredStatus } = item;
-  console.log(defaultValue);
+const BusinessFormInput = ({
+  item,
+  register,
+  dependOnFields,
+  setDependOnFields,
+}) => {
+  const { labelName, registerName, value, requiredStatus } = item;
+  // console.log("bfi:", value);
   return (
     <div className="w-full my-2 mr-2 flex items-center">
       <label className="w-3/5 p-[6px]">
         {labelName}
         {requiredStatus && <span className="text-red-500">*</span>}
       </label>
-      {type === "text" && (
-        <input
-          type={type}
-          placeholder="Type here"
-          name={registerName}
-          className="w-2/5 p-1 border border-primary rounded-sm focus:outline-none"
-        />
-      )}
 
       {/* [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none  */}
 
-      {type === "number" && !handleOnchange && (
+      {!dependOnFields && (
         <input
-          type={type}
-          defaultValue={defaultValue}
+          type="number"
+          value={value}
+          // defaultValue={0}
           min={0}
-          name={registerName}
           className="w-2/5 p-1 border border-primary rounded-sm focus:outline-none"
+          {...register(`${registerName}`, {
+            required: requiredStatus,
+            valueAsNumber: true,
+          })}
         />
       )}
-      {type === "number" && handleOnchange && (
+      {dependOnFields && (
         <input
-          type={type}
-          defaultValue={defaultValue}
+          type="number"
+          defaultValue={0}
           min={0}
-          name={registerName}
           className="w-2/5 p-1 border border-primary rounded-sm focus:outline-none"
-          onChange={handleOnchange}
+          {...register(`${registerName}`, {
+            required: requiredStatus,
+            valueAsNumber: true,
+          })}
+          onChange={(e) => {
+            e.preventDefault();
+            const fieldName = e.target.name;
+            const value = parseInt(e.target.value);
+
+            setDependOnFields((prevDependOnFields) => ({
+              ...prevDependOnFields,
+              [fieldName]: value,
+            }));
+            console.log("dOn:", dependOnFields);
+          }}
         />
       )}
     </div>

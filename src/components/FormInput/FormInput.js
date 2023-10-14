@@ -10,11 +10,12 @@ const FormInput = ({ item, register }) => {
       {/* [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none  */}
       <input
         type="number"
-        defaultValue="0"
-        min="0"
+        defaultValue={0}
+        min={0}
         className="w-2/5 p-1 border border-primary rounded-sm focus:outline-none"
         {...register(`${description}`, {
           valueAsNumber: true,
+          setValueAs: (value) => (isNaN(value) ? 0 : value),
         })}
       />
     </div>

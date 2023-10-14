@@ -6,7 +6,7 @@ import { AuthContext } from "../../context/AuthProvider/AuthProvider";
 import toast, { Toaster } from "react-hot-toast";
 
 const SignupPage = () => {
-  const { user, setUser, setIsUserVerified } = useContext(AuthContext);
+  const { user, setUser, setIsUserVerified, baseURL } = useContext(AuthContext);
 
   const navigate = useNavigate();
 
@@ -37,9 +37,9 @@ const SignupPage = () => {
       return toast.error("Password must have at least 8 characters");
     }
 
-    // console.log("form:", signupData);
+    console.log("form:", signupData);
 
-    fetch("http://127.0.0.1:8000/api/v1/signup/", {
+    fetch(`${baseURL}/signup/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -48,7 +48,7 @@ const SignupPage = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        // console.log("sr:", data);
+        console.log("sr:", data);
         setUser(data);
         toast.success("User created successfully. Please, verify user.");
         document.getElementById("otp_modal").showModal();
@@ -69,7 +69,7 @@ const SignupPage = () => {
       toast.error("OTP must be 5 digit");
     }
 
-    fetch(`http://127.0.0.1:8000/api/v1/verify-otp/${user.username}/`, {
+    fetch(`${baseURL}/verify-otp/${user.username}/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -89,6 +89,23 @@ const SignupPage = () => {
         console.log(err);
         toast.error(err.message);
       });
+  };
+
+  const handleOTPResend = (e) => {
+    e.preventDefault();
+
+    fetch(`${baseURL}/resend-otp/${user?.id}/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        // toast.success(data);
+      })
+      .catch((error) => console.log("error", error));
   };
 
   const handleModalClose = () => {
@@ -192,7 +209,10 @@ const SignupPage = () => {
               className=" p-1 border border-primary rounded-sm focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
             />
             <div className="my-2 flex justify-center gap-2">
-              <button className="btn btn-sm btn-error text-secondary">
+              <button
+                className="btn btn-sm btn-error text-secondary"
+                onClick={handleOTPResend}
+              >
                 Resend
               </button>
               <button className="btn btn-sm btn-primary text-secondary">
