@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import React, { useContext } from "react";
+=======
+import React from "react";
+>>>>>>> cf242599516b441b1ccffdf620230c388b15b649
 import { useForm } from "react-hook-form";
 import CheckBoxField from "../../../components/CheckBoxField/CheckBoxField";
 import { useLoaderData, useNavigate } from "react-router-dom";
@@ -8,7 +12,10 @@ import { faArrowLeftLong } from "@fortawesome/free-solid-svg-icons";
 import toast, { Toaster } from "react-hot-toast";
 import TextInput from "../../../components/TextInput/TextInput";
 import NumberInput from "../../../components/NumberInput/NumberInput";
+<<<<<<< HEAD
 import { AuthContext } from "../../../context/AuthProvider/AuthProvider";
+=======
+>>>>>>> cf242599516b441b1ccffdf620230c388b15b649
 
 const CategoryDescription = () => {
   const categoryItem = useLoaderData();
@@ -16,8 +23,11 @@ const CategoryDescription = () => {
 
   const navigate = useNavigate();
 
+<<<<<<< HEAD
   const { baseURL } = useContext(AuthContext);
 
+=======
+>>>>>>> cf242599516b441b1ccffdf620230c388b15b649
   const { register, handleSubmit, setValue, reset } = useForm({
     defaultValues: categoryItem,
   });
@@ -83,7 +93,11 @@ const CategoryDescription = () => {
       // );
 
       fetch(
+<<<<<<< HEAD
         `${baseURL}/category-retrieve/${categoryItem?.category_name}/${categoryItem?.description}/`,
+=======
+        `http://127.0.0.1:8000/api/v1/category-retrieve/${categoryItem?.category_name}/${categoryItem?.description}/`,
+>>>>>>> cf242599516b441b1ccffdf620230c388b15b649
         {
           method: "PUT",
           headers: {
@@ -108,7 +122,11 @@ const CategoryDescription = () => {
         });
     } else if (btnAction.toLowerCase() === "delete") {
       fetch(
+<<<<<<< HEAD
         `${baseURL}/category-retrieve/${categoryItem?.category_name}/${categoryItem?.description}/`,
+=======
+        `http://127.0.0.1:8000/api/v1/category-retrieve/${categoryItem?.category_name}/${categoryItem?.description}/`,
+>>>>>>> cf242599516b441b1ccffdf620230c388b15b649
         {
           method: "DELETE",
           headers: {
@@ -129,7 +147,11 @@ const CategoryDescription = () => {
           // toast.err(err.message);
         });
     } else {
+<<<<<<< HEAD
       fetch(`${baseURL}/category-setup-create/`, {
+=======
+      fetch("http://127.0.0.1:8000/api/v1/category-setup-create/", {
+>>>>>>> cf242599516b441b1ccffdf620230c388b15b649
         method: "POST",
         headers: {
           "Content-Type": "application/json",

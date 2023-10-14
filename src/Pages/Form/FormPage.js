@@ -10,8 +10,11 @@ const FormPage = () => {
   const categorySetupData = useLoaderData();
   // console.log(categorySetupData);
 
+<<<<<<< HEAD
   const { baseURL } = useContext(AuthContext);
 
+=======
+>>>>>>> cf242599516b441b1ccffdf620230c388b15b649
   const categoryName = categorySetupData[0]?.category_name;
   // console.log(categoryName);
 
@@ -55,7 +58,11 @@ const FormPage = () => {
     };
     console.log("formData:", formData);
 
+<<<<<<< HEAD
     fetch(`${baseURL}/transaction/`, {
+=======
+    fetch("http://127.0.0.1:8000/api/v1/transaction/", {
+>>>>>>> cf242599516b441b1ccffdf620230c388b15b649
       method: "POST",
       headers: {
         "Content-Type": "application/json",

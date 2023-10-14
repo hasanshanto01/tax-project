@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import React, { useContext, useEffect, useState } from "react";
+=======
+import React, { useEffect, useState } from "react";
+>>>>>>> cf242599516b441b1ccffdf620230c388b15b649
 import { useForm } from "react-hook-form";
 import RadioField from "../../../components/RadioField/RadioField";
 import SubmitBtn from "../../../components/SubmitBtn/SubmitBtn";
@@ -7,7 +11,10 @@ import NumberInput from "../../../components/NumberInput/NumberInput";
 import toast, { Toaster } from "react-hot-toast";
 import NumberInputAsString from "../../../components/NumberInputAsString/NumberInputAsString";
 import { useLoaderData } from "react-router-dom";
+<<<<<<< HEAD
 import { AuthContext } from "../../../context/AuthProvider/AuthProvider";
+=======
+>>>>>>> cf242599516b441b1ccffdf620230c388b15b649
 
 const PersonalInfo = () => {
   const [selectedCityOption, setSelectedCityOption] = useState(
@@ -21,8 +28,11 @@ const PersonalInfo = () => {
   const personalInfo = useLoaderData();
   console.log("pires:", personalInfo);
 
+<<<<<<< HEAD
   const { baseURL } = useContext(AuthContext);
 
+=======
+>>>>>>> cf242599516b441b1ccffdf620230c388b15b649
   const { register, handleSubmit, setValue, reset } = useForm({
     defaultValues: personalInfo,
   });
@@ -118,6 +128,7 @@ const PersonalInfo = () => {
 
     data.legal_guardian = Boolean(data.legal_guardian);
     // console.log("boolean:", data.legal_guardian);
+<<<<<<< HEAD
 
     // console.log("pi-res:", data);
 
@@ -126,6 +137,16 @@ const PersonalInfo = () => {
     console.log("piU", updatedData);
 
     fetch(`${baseURL}/personal-details/`, {
+=======
+
+    // console.log("pi-res:", data);
+
+    const { date, income_year_ended_on, assessment_year, ...updatedData } =
+      data;
+    console.log("piU", updatedData);
+
+    fetch("http://127.0.0.1:8000/api/v1/personal-details/", {
+>>>>>>> cf242599516b441b1ccffdf620230c388b15b649
       method: "POST",
       headers: {
         "Content-Type": "application/json",

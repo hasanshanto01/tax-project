@@ -2,7 +2,10 @@ import React, { useContext, useEffect, useState } from "react";
 import CategorySetUp from "../CategorySetUp/CategorySetUp";
 import SlabsSetUp from "../SlabsSetup/SlabsSetUp";
 import QueryMenu from "../../../Shared/QueryMenu/QueryMenu";
+<<<<<<< HEAD
 import { AuthContext } from "../../../context/AuthProvider/AuthProvider";
+=======
+>>>>>>> cf242599516b441b1ccffdf620230c388b15b649
 
 const AdminPage = () => {
   const activeClass =

@@ -8,7 +8,10 @@ import { useLoaderData, useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 import TextInput from "../../../components/TextInput/TextInput";
 import NumberInput from "../../../components/NumberInput/NumberInput";
+<<<<<<< HEAD
 import { AuthContext } from "../../../context/AuthProvider/AuthProvider";
+=======
+>>>>>>> cf242599516b441b1ccffdf620230c388b15b649
 
 const Slabs = () => {
   const slabItem = useLoaderData();
@@ -16,8 +19,11 @@ const Slabs = () => {
 
   const navigate = useNavigate();
 
+<<<<<<< HEAD
   const { baseURL } = useContext(AuthContext);
 
+=======
+>>>>>>> cf242599516b441b1ccffdf620230c388b15b649
   const { register, handleSubmit, setValue, reset } = useForm({
     defaultValues: slabItem,
   });
@@ -69,7 +75,11 @@ const Slabs = () => {
       // const { id, ...updatedData } = submitedData;
       // console.log("u-sl:", updatedData);
 
+<<<<<<< HEAD
       fetch(`${baseURL}/slab-retrieve/${slabItem.id}/`, {
+=======
+      fetch(`http://127.0.0.1:8000/api/v1/slab-retrieve/${slabItem.id}/`, {
+>>>>>>> cf242599516b441b1ccffdf620230c388b15b649
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -91,7 +101,11 @@ const Slabs = () => {
           // toast.err(err.message);
         });
     } else if (btnAction.toLowerCase() === "delete") {
+<<<<<<< HEAD
       fetch(`${baseURL}/slab-retrieve/${slabItem.id}/`, {
+=======
+      fetch(`http://127.0.0.1:8000/api/v1/slab-retrieve/${slabItem.id}/`, {
+>>>>>>> cf242599516b441b1ccffdf620230c388b15b649
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -111,7 +125,11 @@ const Slabs = () => {
           // toast.err(err.message);
         });
     } else {
+<<<<<<< HEAD
       fetch(`${baseURL}/slab-create/`, {
+=======
+      fetch("http://127.0.0.1:8000/api/v1/slab-create/", {
+>>>>>>> cf242599516b441b1ccffdf620230c388b15b649
         method: "POST",
         headers: {
           "Content-Type": "application/json",
