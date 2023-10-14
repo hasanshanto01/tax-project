@@ -12,14 +12,10 @@ import CategoryDescription from "../Pages/AdminPage/CategorySetUp/CategoryDescri
 import Slabs from "../Pages/AdminPage/SlabsSetup/Slabs";
 import LoginPage from "../Pages/LoginPage/LoginPage";
 import SignupPage from "../Pages/SignupPage/SignupPage";
-import PdfTest from "../Pages/PdfTest/PdfTest";
 import ReportPage from "../Pages/ReportPage/ReportPage";
 import SalarySchema from "../Pages/ReportSchema/SalarySchema";
 import PrivateRoute from "./PrivateRoute";
 import ReturnSchema from "../Pages/ReportSchema/ReturnSchema";
-import DynamicForm from "../Pages/OTP/DynamicForm";
-import TestForm from "../Pages/OTP/TestForm";
-import ActiveReport from "../Pages/OTP/ActiveReport";
 <<<<<<< HEAD
 
 // const baseURL = `http://127.0.0.1:8000/api/v1`;
@@ -192,33 +188,5 @@ export const routes = createBrowserRouter([
     path: "/signup",
     element: <SignupPage></SignupPage>,
   },
-  {
-    path: "/pdf",
-    element: <PdfTest></PdfTest>,
-  },
-  {
-    path: "/dynamicform",
-    element: <DynamicForm></DynamicForm>,
-  },
-  {
-    path: "/testform",
-    element: <TestForm></TestForm>,
-  },
-  {
-    path: "/demoreport",
-    element: <ActiveReport></ActiveReport>,
-    loader: () => {
-<<<<<<< HEAD
-      return fetch(`${baseURL}/return/`, {
-=======
-      return fetch(`http://127.0.0.1:8000/api/v1/return/`, {
->>>>>>> cf242599516b441b1ccffdf620230c388b15b649
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        },
-      });
-    },
-  },
+  
 ]);
